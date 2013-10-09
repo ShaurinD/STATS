@@ -1,0 +1,63 @@
+﻿<Window x:Class="WpfApplication2.MainWindow"
+        y:Class="AlphaButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dyanmic Keyboard" Height="600" Width="1200">
+   
+    <Grid Name="Layout">
+        <Grid.Resources>
+            <Style x:Key="bigButtons" TargetType="Button">
+                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                <Setter Property="Height" Value="72"></Setter>
+                <Setter Property="VerticalAlignment" Value="Top"></Setter>
+                <Setter Property="Width" Value="140"></Setter>
+            </Style>
+        </Grid.Resources>
+        <TextBox Height="150" HorizontalAlignment="Left" Margin="10,10,0,0" Name="textBox1" VerticalAlignment="Top" Width="1000" />
+        <Button Content="Enter" Margin="860,254,0,0" Name="EnterButton" Style="{StaticResource bigButtons}"/>
+        <Button Content="Backspace" Margin="860,177,0,0" Name="Backspace" Style="{StaticResource bigButtons}"/>
+        <Button Content="Shift" Margin="860,331,0,0" Name="Shift" Style="{StaticResource bigButtons}"/>
+        <Button Content="Space" Margin="95,410,0,0" Name="Space" Height="72" Width="675" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="CapsLock" Margin="860,410,0,0" Name="Caps" Style="{StaticResource bigButtons}"/>
+        <Grid Name="Keyboard">
+            <Grid.Resources>
+                <Style x:Key="alphaButtonStyle" TargetType="Button">
+                    <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                    <Setter Property="Height" Value="72"></Setter>
+                    <Setter Property="VerticalAlignment" Value="Top"></Setter>
+                    <Setter Property="Width" Value="80"></Setter>
+                </Style>
+            </Grid.Resources>
+                <Button Content="Q" Margin="10,177,0,0" Name="Qbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="W" Margin="95,177,0,0" Name="Wbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="E" Margin="180,177,0,0" Name="Ebutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="R" Margin="265,177,0,0" Name="Rbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="T" Margin="350,177,0,0" Name="Tbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="Y" Margin="435,177,0,0" Name="Ybutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="U" Margin="520,177,0,0" Name="Ubutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="I" Margin="605,177,0,0" Name="Ibutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="O" Margin="690,177,0,0" Name="Obutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="P" Margin="775,177,0,0" Name="Pbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="A" Margin="10,254,0,0" Name="Abutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="S" Margin="95,254,0,0" Name="Sbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="D" Margin="180,254,0,0" Name="Dbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="F" Margin="265,254,0,0" Name="Fbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="G" Margin="350,254,0,0" Name="Gbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="H" Margin="435,254,0,0" Name="Hbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="J" Margin="520,254,0,0" Name="Jbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="K" Margin="605,254,0,0" Name="Kbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="L" Margin="690,254,0,0" Name="Lbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="'" Margin="775,254,0,0" Name="APbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="Z" Margin="10,331,0,0" Name="Zbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="X" Margin="95,331,0,0" Name="Xbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="C" Margin="180,331,0,0" Name="Cbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="V" Margin="265,331,0,0" Name="Vbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="B" Margin="350,331,0,0" Name="Bbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="N" Margin="435,331,0,0" Name="Nbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="M" Margin="520,331,0,0" Name="Mbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="," Margin="605,331,0,0" Name="CommaButton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="." Margin="690,331,0,0" Name="Periodbutton" Style="{StaticResource alphaButtonStyle}"/>
+                <Button Content="?" Margin="775,331,0,0" Name="QmarkButton" Style="{StaticResource alphaButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Window>
