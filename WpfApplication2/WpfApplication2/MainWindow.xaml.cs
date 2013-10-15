@@ -40,15 +40,19 @@ namespace WpfApplication2
 
         protected void AlphaButton_Click(object sender, RoutedEventArgs e)
         {
+            int start = tb.SelectionStart;
+            int len = tb.SelectionLength;
+            string firstHalf = tb.Text.Substring(0, start + len);
+            string secondHalf = tb.Text.Substring(start + len);
             if (shift.IsChecked == true || capsLock.IsChecked == true)
             {
-                tb.Text += this.Content.ToString();
+                tb.Text = firstHalf + this.Content.ToString() + secondHalf;
                 shift.IsChecked = false;
             }
             else
-                tb.Text += this.lowercase;
+                tb.Text = firstHalf + this.lowercase + secondHalf;
             tb.Focus();
-            tb.SelectionStart = tb.Text.Length;
+            tb.SelectionStart = start + 1;
         }
 
         private TextBox tb;
@@ -63,6 +67,7 @@ namespace WpfApplication2
         {
             InitializeComponent();
             loadStandardKeyboard();
+            textBox1.SelectionStart = 0;
             EnterButton.Click += EnterButton_Click;
             Backspace.Click += BackspaceButton_Click;
             Space.Click += SpaceButton_Click;
@@ -71,32 +76,49 @@ namespace WpfApplication2
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            textBox1.Text += System.Environment.NewLine;
+            int start = textBox1.SelectionStart;
+            int len = textBox1.SelectionLength;
+            string firstHalf = textBox1.Text.Substring(0, start + len);
+            string secondHalf = textBox1.Text.Substring(start + len);
+            textBox1.Text = firstHalf + System.Environment.NewLine + secondHalf;
             textBox1.Focus();
-            textBox1.SelectionStart = textBox1.Text.Length;
+            textBox1.SelectionStart = start + 1;
         }
 
         private void BackspaceButton_Click(object sender, RoutedEventArgs e)
         {
-            if(textBox1.Text.Length != 0)
+            int start = textBox1.SelectionStart;
+            int len = textBox1.SelectionLength;
+            if(textBox1.Text.Length != 0 && start+len >0)
             {
-                int check = ((textBox1.Text.Length - 2) > 0) ? textBox1.Text.Length-2 : 0;
+                int check = (((start+len) - 2) > 0) ? (start+len)-2 : 0;
                 if (textBox1.Text.Substring(check) == System.Environment.NewLine)
-                    textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 2);
+                {
+                    string firstHalf = textBox1.Text.Substring(0, start + len-2);
+                    string secondHalf = textBox1.Text.Substring(start + len);
+                    textBox1.Text = firstHalf + secondHalf;
+                    textBox1.SelectionStart = start - 2;
+                }
                 else
                 {
-                    textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
+                    string firstHalf = textBox1.Text.Substring(0, start + len - 1);
+                    string secondHalf = textBox1.Text.Substring(start + len);
+                    textBox1.Text = firstHalf + secondHalf;
+                    textBox1.SelectionStart = start - 1;
                 }
             }
             textBox1.Focus();
-            textBox1.SelectionStart = textBox1.Text.Length;
         }
 
         private void SpaceButton_Click(object sender, RoutedEventArgs e)
         {
-            textBox1.Text += " ";
+            int start = textBox1.SelectionStart;
+            int len = textBox1.SelectionLength;
+            string firstHalf = textBox1.Text.Substring(0, start + len);
+            string secondHalf = textBox1.Text.Substring(start + len);
+            textBox1.Text = firstHalf + " " + secondHalf;
             textBox1.Focus();
-            textBox1.SelectionStart = textBox1.Text.Length;
+            textBox1.SelectionStart = start + 1;
         }
 
         private void loadStandardKeyboard()
