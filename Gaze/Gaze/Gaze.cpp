@@ -2,9 +2,10 @@
 //
 
 #include "stdafx.h"
+
+
 #include "pxcsession.h" 
 #include "pxcsmartptr.h"
-#include <iostream>
 #include <stdio.h>
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
@@ -12,8 +13,65 @@
 #include "CaptureStream.h"
 #include "BackgroundMaskCleaner.h"
 
-using namespace std;
+#include "opencv2/core/core.hpp"
+#include "opencv2/contrib/contrib.hpp"
+#include "opencv2/highgui/highgui.hpp"
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 using namespace cv;
+using namespace std;
+
+
+
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/objdetect/objdetect.hpp>
+
+
+String face_cascade_name = "haarcascade_frontalface_alt.xml";
+ String eyes_cascade_name = "haarcascade_eye_tree_eyeglasses.xml";
+ CascadeClassifier face_cascade;
+ CascadeClassifier eyes_cascade;
+ string window_name = "Capture - Face detection";
+ RNG rng(12345);
+
+void detectAndDisplay( Mat frame )
+{
+  std::vector<Rect> faces;
+  Mat frame_gray;
+
+  cvtColor( frame, frame_gray, CV_BGR2GRAY );
+  equalizeHist( frame_gray, frame_gray );
+
+  //-- Detect faces
+  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+
+  for( int i = 0; i < faces.size(); i++ )
+  {
+    Point center( faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5 );
+    ellipse( frame, center, Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
+
+    Mat faceROI = frame_gray( faces[i] );
+    std::vector<Rect> eyes;
+	/*
+    //-- In each face, detect eyes
+    eyes_cascade.detectMultiScale( faceROI, eyes, 1.1, 2, 0 |CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+
+    for( int j = 0; j < eyes.size(); j++ )
+     {
+       Point center( faces[i].x + eyes[j].x + eyes[j].width*0.5, faces[i].y + eyes[j].y + eyes[j].height*0.5 );
+       int radius = cvRound( (eyes[j].width + eyes[j].height)*0.25 );
+       circle( frame, center, radius, Scalar( 255, 0, 0 ), 4, 8, 0 );
+     }
+	 */
+  }
+  //-- Show what you got
+  imshow( window_name, frame );
+ }
+
 
 static void help()
 {
@@ -34,6 +92,9 @@ static void help()
 int main(int argc, char **argv) 
 {
 	help(); //Debugging stuffz 
+
+    if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading\n"); return -1; };
+    if( !eyes_cascade.load( eyes_cascade_name ) ){ printf("--(!)Error loading\n"); return -1; };
 
 	// setup window(s) to view output(s)
 	const string rgbWindowName = "RGB";
@@ -80,6 +141,9 @@ int main(int argc, char **argv)
 		// create an OpenCV image for working with each frame
 		Mat *rgbFrame = captureStream.getCurrentRGBFrame();
 
+		//flip(*rgbFrame, *rgbFrame, 1);
+
+
 		// apply the depth mask (if it's turned on)
 		if (useDepthData && createDepthMask)
 		{
@@ -103,6 +167,7 @@ int main(int argc, char **argv)
 			temp.copyTo(*rgbFrame, depthMaskFrame);
 		}
 		
+		
 		t = (double)cvGetTickCount() - t;
 		totalMS += (int)(t / (cvGetTickFrequency() * 1000.0F));
 		// print out the FPS
@@ -118,8 +183,12 @@ int main(int argc, char **argv)
 			putText(*rgbFrame, textStr, org, FONT_HERSHEY_SIMPLEX, 0.6F, Scalar(0, 255, 0), 1, 8, false);
 		}
 
+		detectAndDisplay(*rgbFrame);
+
+
 		// show the frame in the window
-		imshow(rgbWindowName, *rgbFrame); //DEBUG STUFFZ
+		//imshow(rgbWindowName, *rgbFrame); //DEBUG STUFFZ
+
 
 		// check on the frames
 		if (frameCnt > 5000)
@@ -177,3 +246,4 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+

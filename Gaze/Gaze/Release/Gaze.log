@@ -1,19 +1,21 @@
-﻿Build started 10/11/2013 3:23:22 PM.
-     1>Project "c:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Gaze\Gaze.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10/15/2013 3:20:25 PM.
+     1>Project "C:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Gaze\Gaze.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\OpenCV\opencv\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\Gaze.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Gaze.cpp
          Gaze.cpp
-     1>Gaze.cpp(133): warning C4101: 'currentDepth' : unreferenced local variable
+     1>Gaze.cpp(52): warning C4018: '<' : signed/unsigned mismatch
+     1>Gaze.cpp(54): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>Gaze.cpp(55): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"c:\users\samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\OpenCV\opencv\build\x86\vc11\lib libpxc.lib libpxcutils.lib opencv_calib3d246.lib opencv_contrib246.lib opencv_core246.lib opencv_features2d246.lib opencv_flann246.lib opencv_gpu246.lib opencv_haartraining_engine.lib opencv_highgui246.lib opencv_imgproc246.lib opencv_legacy246.lib opencv_ml246.lib opencv_nonfree246.lib opencv_objdetect246.lib opencv_photo246.lib opencv_stitching246.lib opencv_ts246.lib opencv_video246.lib opencv_videostab246.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"c:\users\samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"c:\users\samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.lib" /MACHINE:X86 /SAFESEH Release\BackgroundMaskCleaner.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\OpenCV\opencv\build\x86\vc11\lib libpxc.lib libpxcutils.lib opencv_calib3d246.lib opencv_contrib246.lib opencv_core246.lib opencv_features2d246.lib opencv_flann246.lib opencv_gpu246.lib opencv_haartraining_engine.lib opencv_highgui246.lib opencv_imgproc246.lib opencv_legacy246.lib opencv_ml246.lib opencv_nonfree246.lib opencv_objdetect246.lib opencv_photo246.lib opencv_stitching246.lib opencv_ts246.lib opencv_video246.lib opencv_videostab246.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.lib" /MACHINE:X86 /SAFESEH Release\BackgroundMaskCleaner.obj
          Release\Gaze.obj
          Release\CaptureStream.obj
          Release\stdafx.obj
          Generating code
          Finished generating code
-         Gaze.vcxproj -> c:\users\samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.exe
-     1>Done Building Project "c:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Gaze\Gaze.vcxproj" (Build target(s)).
+         Gaze.vcxproj -> C:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Release\Gaze.exe
+     1>Done Building Project "C:\Users\Samuel\documents\visual studio 2012\Projects\Gaze\Gaze\Gaze.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:05.58
+Time Elapsed 00:00:06.39
