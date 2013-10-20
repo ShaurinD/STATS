@@ -22,8 +22,10 @@
         <Button Content="Enter" Margin="860,254,0,0" Name="EnterButton" Style="{StaticResource bigButtons}"/>
         <Button Content="Backspace" Margin="860,177,0,0" Name="Backspace" Style="{StaticResource bigButtons}"/>
         <ToggleButton Content="Shift" Margin="860,331,0,0" Name="Shift" Style="{StaticResource bigToggleButtons}"/>
-        <Button Content="Space" Margin="95,410,0,0" Name="Space" Height="72" Width="675" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Space" Margin="95,410,0,0" Name="Space" Height="72" Width="590" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <ToggleButton Content="CapsLock" Margin="860,410,0,0" Name="Caps" Style="{StaticResource bigToggleButtons}"/>
+        <Button Margin="690,410,0,0" Name="Left" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <Button Margin="775,410,0,0" Name="Right" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
         <StackPanel Name="col1" Margin ="10,177,0,0" VerticalAlignment="Top" Width="1000" Height="216"  HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col2" Margin ="95,177,0,0" VerticalAlignment="Top" Width="1000" Height="216" HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col3" Margin ="180,177,0,0" VerticalAlignment="Top" Width="1000" Height="216" HorizontalAlignment="Left"></StackPanel>

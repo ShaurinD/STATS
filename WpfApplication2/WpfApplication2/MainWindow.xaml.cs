@@ -40,10 +40,10 @@ namespace WpfApplication2
 
         protected void AlphaButton_Click(object sender, RoutedEventArgs e)
         {
+            
             int start = tb.SelectionStart;
-            int len = tb.SelectionLength;
-            string firstHalf = tb.Text.Substring(0, start + len);
-            string secondHalf = tb.Text.Substring(start + len);
+            string firstHalf = tb.Text.Substring(0, start);
+            string secondHalf = tb.Text.Substring(start);
             if (shift.IsChecked == true || capsLock.IsChecked == true)
             {
                 tb.Text = firstHalf + this.Content.ToString() + secondHalf;
@@ -68,18 +68,21 @@ namespace WpfApplication2
             InitializeComponent();
             loadStandardKeyboard();
             textBox1.SelectionStart = 0;
+            Left.Content = "<-";
+            Right.Content = "->";
             EnterButton.Click += EnterButton_Click;
             Backspace.Click += BackspaceButton_Click;
             Space.Click += SpaceButton_Click;
+            Left.Click += LeftButton_Click;
+            Right.Click += RightButton_Click;
             //Keyboard.Visibility = Visibility.Collapsed;
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
             int start = textBox1.SelectionStart;
-            int len = textBox1.SelectionLength;
-            string firstHalf = textBox1.Text.Substring(0, start + len);
-            string secondHalf = textBox1.Text.Substring(start + len);
+            string firstHalf = textBox1.Text.Substring(0, start);
+            string secondHalf = textBox1.Text.Substring(start);
             textBox1.Text = firstHalf + System.Environment.NewLine + secondHalf;
             textBox1.Focus();
             textBox1.SelectionStart = start + 1;
@@ -88,21 +91,19 @@ namespace WpfApplication2
         private void BackspaceButton_Click(object sender, RoutedEventArgs e)
         {
             int start = textBox1.SelectionStart;
-            int len = textBox1.SelectionLength;
-            if(textBox1.Text.Length != 0 && start+len >0)
+            if(textBox1.Text.Length != 0 && start >0)
             {
-                int check = (((start+len) - 2) > 0) ? (start+len)-2 : 0;
-                if (textBox1.Text.Substring(check) == System.Environment.NewLine)
+                if (start > 1 && textBox1.Text.Substring(start - 2, 2) == System.Environment.NewLine)
                 {
-                    string firstHalf = textBox1.Text.Substring(0, start + len-2);
-                    string secondHalf = textBox1.Text.Substring(start + len);
+                    string firstHalf = textBox1.Text.Substring(0, start-2);
+                    string secondHalf = textBox1.Text.Substring(start);
                     textBox1.Text = firstHalf + secondHalf;
                     textBox1.SelectionStart = start - 2;
                 }
                 else
                 {
-                    string firstHalf = textBox1.Text.Substring(0, start + len - 1);
-                    string secondHalf = textBox1.Text.Substring(start + len);
+                    string firstHalf = textBox1.Text.Substring(0, start- 1);
+                    string secondHalf = textBox1.Text.Substring(start);
                     textBox1.Text = firstHalf + secondHalf;
                     textBox1.SelectionStart = start - 1;
                 }
@@ -113,10 +114,28 @@ namespace WpfApplication2
         private void SpaceButton_Click(object sender, RoutedEventArgs e)
         {
             int start = textBox1.SelectionStart;
-            int len = textBox1.SelectionLength;
-            string firstHalf = textBox1.Text.Substring(0, start + len);
-            string secondHalf = textBox1.Text.Substring(start + len);
+            string firstHalf = textBox1.Text.Substring(0, start);
+            string secondHalf = textBox1.Text.Substring(start);
             textBox1.Text = firstHalf + " " + secondHalf;
+            textBox1.Focus();
+            textBox1.SelectionStart = start + 1;
+        }
+
+        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            int start = textBox1.SelectionStart;
+            textBox1.Focus();
+            if (start == 0)
+                return;
+            if (start > 1 && textBox1.Text.Substring(start - 2, 2) == System.Environment.NewLine)
+                textBox1.SelectionStart = start - 2;
+            else
+                textBox1.SelectionStart = start - 1;
+        }
+
+        private void RightButton_Click(object sender, RoutedEventArgs e)
+        {
+            int start = textBox1.SelectionStart;
             textBox1.Focus();
             textBox1.SelectionStart = start + 1;
         }
