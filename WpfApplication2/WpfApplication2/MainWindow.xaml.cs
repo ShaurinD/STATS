@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 
 namespace WpfApplication2
 {
@@ -40,7 +41,12 @@ namespace WpfApplication2
 
         protected void AlphaButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            //Highlight for a few seconds
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            this.Background = Brushes.Yellow;
             int start = tb.SelectionStart;
             string firstHalf = tb.Text.Substring(0, start);
             string secondHalf = tb.Text.Substring(start);
@@ -55,6 +61,11 @@ namespace WpfApplication2
             tb.SelectionStart = start + 1;
         }
 
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            this.ClearValue(Button.BackgroundProperty);
+        }
+
         private TextBox tb;
         private ToggleButton shift;
         private ToggleButton capsLock;
@@ -63,6 +74,7 @@ namespace WpfApplication2
 
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -75,11 +87,28 @@ namespace WpfApplication2
             Space.Click += SpaceButton_Click;
             Left.Click += LeftButton_Click;
             Right.Click += RightButton_Click;
+            Clear.Click += ClearButton_Click;
             //Keyboard.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => unhighlight(Clear);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            Clear.Background = Brushes.Yellow;
+            textBox1.Focus();
+            textBox1.Clear();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => unhighlight(EnterButton);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            EnterButton.Background = Brushes.Yellow;
             int start = textBox1.SelectionStart;
             string firstHalf = textBox1.Text.Substring(0, start);
             string secondHalf = textBox1.Text.Substring(start);
@@ -90,6 +119,11 @@ namespace WpfApplication2
 
         private void BackspaceButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => unhighlight(Backspace);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            Backspace.Background = Brushes.Yellow;
             int start = textBox1.SelectionStart;
             if(textBox1.Text.Length != 0 && start >0)
             {
@@ -113,6 +147,11 @@ namespace WpfApplication2
 
         private void SpaceButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => unhighlight(Space);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            Space.Background = Brushes.Yellow;
             int start = textBox1.SelectionStart;
             string firstHalf = textBox1.Text.Substring(0, start);
             string secondHalf = textBox1.Text.Substring(start);
@@ -123,6 +162,11 @@ namespace WpfApplication2
 
         private void LeftButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => unhighlight(Left);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            Left.Background = Brushes.Yellow;
             int start = textBox1.SelectionStart;
             textBox1.Focus();
             if (start == 0)
@@ -135,9 +179,19 @@ namespace WpfApplication2
 
         private void RightButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => unhighlight(Right);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            Right.Background = Brushes.Yellow;
             int start = textBox1.SelectionStart;
             textBox1.Focus();
             textBox1.SelectionStart = start + 1;
+        }
+
+        private void unhighlight(Button btn)
+        {
+            btn.ClearValue(Button.BackgroundProperty);
         }
 
         private void loadStandardKeyboard()
