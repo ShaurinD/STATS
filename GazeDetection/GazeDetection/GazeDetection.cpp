@@ -17,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	PXCSession_Create(&session); 
 	//Creating instance of face tracking module
 	PXCFaceAnalysis* face = 0;
-	session->CreateImpl(PXCFaceAnalysis::CUID, (void**) face);
+	session->CreateImpl(PXCFaceAnalysis::CUID, (void**) &face);
 	
 	//Initialize the tracking module
 	PXCFaceAnalysis::ProfileInfo pinfo; 
@@ -37,7 +37,8 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
 	//Modules for color image and depth image samples
 	PXCSmartArray<PXCImage> images; 
-	PXCSmartSPArray sps(2); 	
+	PXCSmartSPArray sps(2); 
+	
 	//Video Capture and Processing Loop
 	for(int i = 0;;i++) {
 		//Get samples from input device and pass to the module 
@@ -47,15 +48,15 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		
 		
 		pxcUID fid = 0; pxcU64 ts; 
-		if (face->QueryFace(i,&fid,&ts)<PXC_STATUS_NO_ERROR) break; 
+		face->QueryFace(0,&fid,&ts); 
 		PXCFaceAnalysis::Detection::Data data; 
-		if (det->QueryData(fid,&data)<PXC_STATUS_NO_ERROR) break; 
+		det->QueryData(fid,&data);
 		//Getting landmark location of 7 points on face
 		PXCFaceAnalysis::Landmark::LandmarkData ldata;
-		if (landmark->QueryLandmarkData(fid, PXCFaceAnalysis::Landmark::LABEL_7POINTS, 0, &ldata)<PXC_STATUS_NO_ERROR) break;  
+		landmark->QueryLandmarkData(fid, PXCFaceAnalysis::Landmark::LABEL_7POINTS, 0, &ldata);
 		//Getting pose data of face
 		PXCFaceAnalysis::Landmark::PoseData pdata; 
-		if (landmark->QueryPoseData(fid,&pdata)<PXC_STATUS_NO_ERROR) break; 
+		landmark->QueryPoseData(fid,&pdata); 
 				
 		//Tracking or recognition results are ready
 		//Now processing the results
@@ -70,8 +71,6 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		
 		// testing pose data
 		cout << "pitch: " << pitch << "  roll: " << roll << "   yaw: " << yaw << endl;
-
-
 
 	}
 	
