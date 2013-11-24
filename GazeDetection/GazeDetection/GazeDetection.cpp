@@ -1,3 +1,5 @@
+/*
+
 #include "stdafx.h" 
 #include <pxcsession.h>
 #include <pxcsmartptr.h>
@@ -32,8 +34,9 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	det->QueryProfile(0,&dinfo); 
 	det->SetProfile(&dinfo);
 	PXCFaceAnalysis::Landmark *landmark = face->DynamicCast<PXCFaceAnalysis::Landmark>();
-
-	
+	PXCFaceAnalysis::Landmark::LandmarkData ldata;
+	landmark->QueryLandmarkData(PXCFaceAnalysis::Landmark::LABEL_NOSE_TIP, 0, &ldata);
+		
 
 	//Modules for color image and depth image samples
 	PXCSmartArray<PXCImage> images; 
@@ -47,13 +50,11 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		sps.SynchronizeEx(); 
 		
 		
-		pxcUID fid = 0; pxcU64 ts; 
+		pxcUID fid; pxcU64 ts; 
 		face->QueryFace(0,&fid,&ts); 
 		PXCFaceAnalysis::Detection::Data data; 
 		det->QueryData(fid,&data);
 		//Getting landmark location of 7 points on face
-		PXCFaceAnalysis::Landmark::LandmarkData ldata;
-		landmark->QueryLandmarkData(fid, PXCFaceAnalysis::Landmark::LABEL_7POINTS, 0, &ldata);
 		//Getting pose data of face
 		PXCFaceAnalysis::Landmark::PoseData pdata; 
 		landmark->QueryPoseData(fid,&pdata); 
@@ -76,3 +77,4 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	
 	return 0; 
 } 
+*/
