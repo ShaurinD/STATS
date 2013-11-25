@@ -1,10 +1,9 @@
-﻿Build started 11/24/2013 9:33:49 PM.
+﻿Build started 11/24/2013 11:25:11 PM.
      1>Project "C:\Users\Samuel\Documents\Visual Studio 2012\Projects\GazeDectect\GazeDectect\GazeDectect.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\opencv\build\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\GazeDectect.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GazeDectect.cpp
          GazeDectect.cpp
-     1>c:\users\samuel\documents\visual studio 2012\projects\gazedectect\gazedectect\gazedectect.cpp(120): warning C4244: '=' : conversion from 'float' to 'char', possible loss of data
-     1>c:\users\samuel\documents\visual studio 2012\projects\gazedectect\gazedectect\gazedectect.cpp(78): warning C4101: 'rgb_info' : unreferenced local variable
+     1>c:\users\samuel\documents\visual studio 2012\projects\gazedectect\gazedectect\gazedectect.cpp(70): warning C4101: 'rgb_info' : unreferenced local variable
      1>c:\users\samuel\documents\visual studio 2012\projects\gazedectect\gazedectect\gazedectect.cpp(47): warning C4101: 'mCImageData' : unreferenced local variable
      1>c:\users\samuel\documents\visual studio 2012\projects\gazedectect\gazedectect\gazedectect.cpp(46): warning C4101: 'mcImage' : unreferenced local variable
        Link:
@@ -15,4 +14,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:07.99
+Time Elapsed 00:00:09.05
