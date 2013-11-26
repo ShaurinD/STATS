@@ -24,20 +24,20 @@ namespace Test
 {
     public class AlphaButton : Button
     {
-        public AlphaButton(String uppercase, String _lowercase, ref AutoCompleteTextBox tb,
-                                ref ToggleButton Shift, ref ToggleButton caps)
+        public AlphaButton(String _uppercase, String _lowercase, ref AutoCompleteTextBox tb,
+                               Keyboard curKeyboard)
         {
             this.Width = 80;
             this.Height = 72;
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
-            this.Content = uppercase;
-            this.lowercase = _lowercase;
             this.FontSize = 25;
-            this.shift = Shift;
-            this.capsLock = caps;
+            this.Content = _lowercase;
+            this.uppercase = _uppercase;
+            this.lowercase = _lowercase;
             this.tb = tb;
             this.Click += AlphaButton_Click;
+            this.curKeyboard = curKeyboard;
         }
 
         protected void AlphaButton_Click(object sender, RoutedEventArgs e)
@@ -49,17 +49,13 @@ namespace Test
             dispatcherTimer.Start();
             this.Background = Brushes.Cyan;
             int start = tb.SelectionStart;
-            string firstHalf = tb.Text.Substring(0, start);
-            string secondHalf = tb.Text.Substring(start);
-            if (shift.IsChecked == true || capsLock.IsChecked == true)
-            {
-                tb.Text = firstHalf + this.Content.ToString() + secondHalf;
-                shift.IsChecked = false;
-            }
-            else
-                tb.Text = firstHalf + this.lowercase + secondHalf;
+            int len = tb.SelectionLength;
+            string firstHalf = tb.Text.Substring(0, start + len);
+            string secondHalf = tb.Text.Substring(start + len);
+            tb.Text = firstHalf + this.Content.ToString() + secondHalf;
+            tb.SelectionStart = start + this.Content.ToString().Length;
             tb.Focus();
-            tb.SelectionStart = start + 1;
+            curKeyboard.ShiftHandler();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -68,8 +64,8 @@ namespace Test
         }
 
         private TextBox tb;
-        private ToggleButton shift;
-        private ToggleButton capsLock;
+        private Keyboard curKeyboard;
+        public String uppercase;
         public String lowercase;
     }
 }

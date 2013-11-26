@@ -19,6 +19,8 @@ using System.Collections;
 using Aviad.WPF.Controls;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
+using Microsoft.VisualBasic;
+
 
 namespace Test
 {
@@ -29,11 +31,15 @@ namespace Test
 
     public partial class Window1 : Window
     {
-        HashSet<String> usedWords = new HashSet<String>();
+        Keyboard curKeyboard;
+        public bool shiftOn = false;
+        public bool capsOn = false;
         public Window1()
         {
             InitializeComponent();
-            loadStandardKeyboard();
+            curKeyboard = new Keyboard("Standard.txt", ref tb);
+            ShowKeyboard();
+            tb.SelectionStart = 0;
             LeftArrow.Content = "<-";
             RightArrow.Content = "->";
             EnterButton.Click += EnterButton_Click;
@@ -42,6 +48,62 @@ namespace Test
             LeftArrow.Click += LeftButton_Click;
             RightArrow.Click += RightButton_Click;
             Clear.Click += ClearButton_Click;
+            Shift.Click += Shift_Click;
+            Caps.Click += Caps_Click;
+            SwitchKeyboard.Click += SwitchKeyboard_Click;
+        }
+
+        private void ShowKeyboard()
+        {
+            for (int j = 0; j < curKeyboard.buttonCount; j++)
+            {
+                if (j / 3 == 0)
+                    col1.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 1)
+                    col2.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 2)
+                    col3.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 3)
+                    col4.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 4)
+                    col5.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 5)
+                    col6.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 6)
+                    col7.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 7)
+                    col8.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 8)
+                    col9.Children.Add(curKeyboard.buttons[j]);
+                else if (j / 3 == 9)
+                    col10.Children.Add(curKeyboard.buttons[j]);
+            }
+        }
+
+        private void SwitchKeyboard_Click(object sender, RoutedEventArgs e)
+        {
+            curKeyboard.HideKeys();
+            string filename = Interaction.InputBox("What keyboard are you looking for?") + ".txt";
+            if (File.Exists(filename))
+            {
+                col1.Children.Clear();
+                col2.Children.Clear();
+                col3.Children.Clear();
+                col4.Children.Clear();
+                col5.Children.Clear();
+                col6.Children.Clear();
+                col7.Children.Clear();
+                col8.Children.Clear();
+                col9.Children.Clear();
+                col10.Children.Clear();
+                curKeyboard.LoadKeyboard(filename, ref tb);
+                ShowKeyboard();
+            }
+            else
+            {
+                Interaction.MsgBox("Unable to find the requested keyboard.");
+            }
+            curKeyboard.ShowKeys();
         }
        
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -142,73 +204,38 @@ namespace Test
             tb.SelectionStart = start + 1;
         }
 
+        private void Shift_Click(object sender, RoutedEventArgs e)
+        {
+            if (capsOn == false & shiftOn == false)
+            {
+                curKeyboard.ToUpper();
+                shiftOn = true;
+            }
+            else if (capsOn == false & shiftOn == true)
+            {
+                curKeyboard.ToLower();
+                shiftOn = false;
+            }
+        }
+
+        private void Caps_Click(object sender, RoutedEventArgs e)
+        {
+            if (capsOn == false)
+            {
+                curKeyboard.ToUpper();
+                capsOn = true;
+                shiftOn = false;
+            }
+            else if (capsOn == true)
+            {
+                curKeyboard.ToLower();
+                capsOn = false;
+            }
+        }
+
         private void unhighlight(Button btn)
         {
             btn.ClearValue(Button.BackgroundProperty);
-        }
-
-        private void loadStandardKeyboard()
-        {
-            AlphaButton Q = new AlphaButton("Q", "q", ref tb, ref Shift, ref Caps);
-            col1.Children.Add(Q);
-            AlphaButton A = new AlphaButton("A", "a", ref tb, ref Shift, ref Caps);
-            col1.Children.Add(A);
-            AlphaButton Z = new AlphaButton("Z", "z", ref tb, ref Shift, ref Caps);
-            col1.Children.Add(Z);
-            AlphaButton W = new AlphaButton("W", "w", ref tb, ref Shift, ref Caps);
-            col2.Children.Add(W);
-            AlphaButton S = new AlphaButton("S", "s", ref tb, ref Shift, ref Caps);
-            col2.Children.Add(S);
-            AlphaButton X = new AlphaButton("X", "x", ref tb, ref Shift, ref Caps);
-            col2.Children.Add(X);
-            AlphaButton E = new AlphaButton("E", "e", ref tb, ref Shift, ref Caps);
-            col3.Children.Add(E);
-            AlphaButton D = new AlphaButton("D", "d", ref tb, ref Shift, ref Caps);
-            col3.Children.Add(D);
-            AlphaButton C = new AlphaButton("C", "c", ref tb, ref Shift, ref Caps);
-            col3.Children.Add(C);
-            AlphaButton R = new AlphaButton("R", "r", ref tb, ref Shift, ref Caps);
-            col4.Children.Add(R);
-            AlphaButton F = new AlphaButton("F", "f", ref tb, ref Shift, ref Caps);
-            col4.Children.Add(F);
-            AlphaButton V = new AlphaButton("V", "v", ref tb, ref Shift, ref Caps);
-            col4.Children.Add(V);
-            AlphaButton T = new AlphaButton("T", "t", ref tb, ref Shift, ref Caps);
-            col5.Children.Add(T);
-            AlphaButton G = new AlphaButton("G", "g", ref tb, ref Shift, ref Caps);
-            col5.Children.Add(G);
-            AlphaButton B = new AlphaButton("B", "b", ref tb, ref Shift, ref Caps);
-            col5.Children.Add(B);
-            AlphaButton Y = new AlphaButton("Y", "y", ref tb, ref Shift, ref Caps);
-            col6.Children.Add(Y);
-            AlphaButton H = new AlphaButton("H", "h", ref tb, ref Shift, ref Caps);
-            col6.Children.Add(H);
-            AlphaButton N = new AlphaButton("N", "n", ref tb, ref Shift, ref Caps);
-            col6.Children.Add(N);
-            AlphaButton U = new AlphaButton("U", "u", ref tb, ref Shift, ref Caps);
-            col7.Children.Add(U);
-            AlphaButton J = new AlphaButton("J", "j", ref tb, ref Shift, ref Caps);
-            col7.Children.Add(J);
-            AlphaButton M = new AlphaButton("M", "m", ref tb, ref Shift, ref Caps);
-            col7.Children.Add(M);
-            AlphaButton I = new AlphaButton("I", "i", ref tb, ref Shift, ref Caps);
-            col8.Children.Add(I);
-            AlphaButton K = new AlphaButton("K", "k", ref tb, ref Shift, ref Caps);
-            col8.Children.Add(K);
-            AlphaButton Comma = new AlphaButton(",", ",", ref tb, ref Shift, ref Caps);
-            col8.Children.Add(Comma);
-            AlphaButton O = new AlphaButton("O", "o", ref tb, ref Shift, ref Caps);
-            col9.Children.Add(O);
-            AlphaButton L = new AlphaButton("L", "l", ref tb, ref Shift, ref Caps);
-            col9.Children.Add(L);
-            AlphaButton Period = new AlphaButton(".", ".", ref tb, ref Shift, ref Caps);
-            col9.Children.Add(Period);
-            AlphaButton P = new AlphaButton("P", "p", ref tb, ref Shift, ref Caps);
-            col10.Children.Add(P);
-            AlphaButton AP = new AlphaButton("'", "'", ref tb, ref Shift, ref Caps);
-            col10.Children.Add(AP);
-            AlphaButton Question = new AlphaButton("?", "?", ref tb, ref Shift, ref Caps);
-            col10.Children.Add(Question);
         }
     }
 }
