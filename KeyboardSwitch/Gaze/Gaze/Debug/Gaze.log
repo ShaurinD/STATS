@@ -1,0 +1,17 @@
+﻿Build started 10/13/2013 6:54:32 PM.
+     1>Project "C:\Users\Samuel\Documents\Visual Studio 2012\Projects\Gaze\Gaze\Gaze.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\OpenCV\opencv\build\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_DEPRECATE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Gaze.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Gaze.cpp
+         Gaze.cpp
+     1>c:\users\samuel\documents\visual studio 2012\projects\gaze\gaze\gaze.cpp(44): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Samuel\Documents\Visual Studio 2012\Projects\Gaze\Debug\Gaze.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\OpenCV\opencv\build\x86\vc11\lib libpxc_d.lib libpxcutils_d.lib opencv_calib3d246.lib opencv_contrib246.lib opencv_core246.lib opencv_features2d246.lib opencv_flann246.lib opencv_gpu246.lib opencv_haartraining_engine.lib opencv_highgui246.lib opencv_imgproc246.lib opencv_legacy246.lib opencv_ml246.lib opencv_nonfree246.lib opencv_objdetect246.lib opencv_photo246.lib opencv_stitching246.lib opencv_ts246.lib opencv_video246.lib opencv_videostab246.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Samuel\Documents\Visual Studio 2012\Projects\Gaze\Debug\Gaze.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Samuel\Documents\Visual Studio 2012\Projects\Gaze\Debug\Gaze.lib" /MACHINE:X86 Debug\BackgroundMaskCleaner.obj
+         Debug\Gaze.obj
+         Debug\CaptureStream.obj
+         Debug\stdafx.obj
+         Gaze.vcxproj -> C:\Users\Samuel\Documents\Visual Studio 2012\Projects\Gaze\Debug\Gaze.exe
+     1>Done Building Project "C:\Users\Samuel\Documents\Visual Studio 2012\Projects\Gaze\Gaze\Gaze.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:07.76
