@@ -1,0 +1,459 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Article Source</title>
+<link rel="stylesheet" type="text/css" href="/App_Themes/NetCommunity/CodeProject.css?dt=2.2.0175" />
+<base href="http://www.codeproject.com/KB/WPF/" />
+</head>
+<body>
+<!--
+HTML for article "A Reusable WPF Autocomplete TextBox" by Aviad P.
+URL: http://www.codeproject.com/KB/WPF/autocomplete_textbox.aspx
+Copyright 2009 by Aviad P.
+All formatting, additions and alterations Copyright © CodeProject, 1999-2009
+-->
+
+
+
+<p><b>Please choose 'View Source' in your browser to view the HTML, or File | Save to save this 
+file to your hard drive for editing.</b></p>
+
+<hr class="Divider subdue" />
+<div>
+
+
+
+
+<!-- Start Article -->
+<span id="ArticleContent">
+<ul class="download">
+<li><a href="autocomplete_textbox/ACTBBinaries.zip">Download binaries - 14.11 KB</a></li>
+
+<li><a href="autocomplete_textbox/ACTBSource.zip">Download source - 20.58 KB</a></li>
+</ul>
+
+<h2>Introduction</h2>
+
+<p>One of the sorely missed features in the WPF control arsenal is an auto-complete text box. In this article, I will create an auto-complete text box, which is similar to what you can find on the web, for example when typing into the Google search box.</p>
+
+<p>I created this text box as a WPF custom control, thereby retaining the ability to style and template the control with maximum flexibility. Additionally I designed this control to be reusable, and to harness the full power of WPF with regards to dependency properties and data binding. The control is very easy to use, simply set the <code>ItemsSource</code> property, and set a <code>Binding</code> property to indicate which data field to use as the completion source. The actual filter is set as a delegate in the code-behind.</p>
+
+<p>There are several road blocks I encountered on my way, and I will go into detail in the next section, but here they are summarized:</p>
+
+<ul>
+<li>Exposing the important dependency properties of the list box </li>
+
+<li>Focus issues, and how they affect the popup auto-close behavior, and completion list keyboard navigation</li>
+
+<li>Evaluating a Binding object on a data item dynamically (from code)</li>
+
+<li>Limiting the number of completions shown</li>
+</ul>
+
+<p>In the discussion up ahead, I will not spam the article with code. I will give short examples when necessary, and describe the logic in English. There are two reasons for this, first, there's a lot of code and secondly, I wish to be able to correct and change the code style without having to update the article too much.</p>
+
+<h2>Using the Code</h2>
+
+<p>I will start by demonstrating a simple use case for the control, to show how easy it is to use it. Here's a minimalistic XAML code that uses an auto-complete text box using the U.S. national weather service observation stations' RSS feed. </p>
+
+<p>Here's how it looks while typing, with keyboard navigation into the completion list: </p>
+<img height="300" hspace="0" src="autocomplete_textbox/ss1.jpg" width="600" align="baseline" border="0" /> 
+<p>And here it is after the selection (pressed <code>Enter</code>): </p>
+<img height="300" hspace="0" src="autocomplete_textbox/ss2.jpg" width="600" align="baseline" border="0" /> 
+<p>And the code: </p>
+
+<pre lang="xml">&lt;Window x:Class=&quot;Test.Window1&quot;
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:actb=&quot;clr-namespace:Aviad.WPF.Controls;assembly=Aviad.WPF.Controls&quot;
+    Title=&quot;Window1&quot; Height=&quot;300&quot; Width=&quot;600&quot;&gt;
+    &lt;Window.Resources&gt;
+        &lt;XmlDataProvider x:Key=&quot;xml&quot; 
+	Source=http://www.nws.noaa.gov/xml/current_obs/index.xml 
+	DataChanged=&quot;XmlDataProvider_DataChanged&quot;/&gt;
+        &lt;DataTemplate x:Key=&quot;TheItemTemplate&quot;&gt;
+            &lt;Border BorderBrush=&quot;Salmon&quot; BorderThickness=&quot;2&quot; CornerRadius=&quot;5&quot;&gt;
+                &lt;Grid&gt;
+                    &lt;Grid.ColumnDefinitions&gt;
+                        &lt;ColumnDefinition Width=&quot;Auto&quot;/&gt;
+                        &lt;ColumnDefinition/&gt;
+                    &lt;/Grid.ColumnDefinitions&gt;
+                    &lt;Grid.RowDefinitions&gt;
+                        &lt;RowDefinition/&gt;
+                        &lt;RowDefinition/&gt;
+                        &lt;RowDefinition/&gt;
+                    &lt;/Grid.RowDefinitions&gt;
+                    &lt;TextBlock Text=&quot;ID:  &quot;/&gt;
+                    &lt;TextBlock Grid.Column=&quot;1&quot; Text=&quot;{Binding XPath=station_id}&quot;/&gt;
+                    &lt;TextBlock Grid.Row=&quot;1&quot; Text=&quot;Name:  &quot;/&gt;
+                    &lt;TextBlock Grid.Column=&quot;1&quot; Grid.Row=&quot;1&quot; 
+			Text=&quot;{Binding XPath=station_name}&quot;/&gt;
+                    &lt;TextBlock Grid.Row=&quot;2&quot; Text=&quot;RSS URL:  &quot;/&gt;
+                    &lt;TextBlock Grid.Column=&quot;1&quot; Grid.Row=&quot;2&quot; 
+			Text=&quot;{Binding XPath=rss_url}&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/Border&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/Window.Resources&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock x:Name=&quot;StatusLabel&quot; Text=&quot;Loading Data...&quot; Margin=&quot;20,20,0,0&quot;/&gt;
+        &lt;actb:AutoCompleteTextBox 
+            x:Name=&quot;actb&quot; 
+            Margin=&quot;20,40,20,0&quot;
+            VerticalAlignment=&quot;Top&quot; 
+            ItemsSource=&quot;{Binding Source={StaticResource xml}, XPath=//station}&quot; 
+            ItemTemplate=&quot;{StaticResource TheItemTemplate}&quot;
+            Binding=&quot;{Binding XPath=station_id}&quot; 
+            MaxCompletions=&quot;10&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+
+<p>And here is the code-behind which sets the filter up:</p>
+
+<pre lang="cs">public partial class Window1 : Window
+{
+    public Window1()
+    {
+        InitializeComponent();
+        actb.Filter = Filter;
+    }
+
+    private bool Filter(object obj, string text)
+    {
+        XmlElement element = (XmlElement)obj;
+        string StationName = 
+		element.SelectSingleNode(&quot;station_name&quot;).InnerText.ToLower();
+        if (StationName.Contains(text.ToLower())) return true;
+        return false;
+    }
+
+    private void XmlDataProvider_DataChanged(object sender, EventArgs e)
+    {
+        StatusLabel.Text = &quot;Xml Data Loaded.&quot;;
+    }
+}</pre>
+
+<p>Note how the filter uses the <code>station_name</code> element to filter the auto-completion list, and the XAML specifies that the <code>station_id</code> is extracted from the selected entry. Run the sample and try it out, remember to wait for the XML data to load, it's not small.</p>
+        <p>In the last section of this article I will show an advanced use case for this 
+            text box, using the Google Suggest API.</p>
+
+<h2>The Implementation</h2>
+
+<p>Conceptually, an auto-complete text box is a text box and a list box in one, but since .NET doesn't allow for multiple inheritance, I had to choose which part is the more prominent one. I chose the <code>TextBox</code> as my base class, and the <code>ListBox</code> control is added as a part in the control template. Additionally, there is the feature which causes the completion list to pop in and out of view when appropriate, and to do that I used a <code>Popup</code> control.</p>
+
+<h3>Exposing Dependency Properties</h3>
+
+<p>Pushing the list box into the template made several important properties inaccessible, namely:</p>
+
+<ul class="property">
+<li><code>ItemsSource </code></li>
+
+<li><code>ItemTemplate </code></li>
+
+<li><code>ItemContainerStyle </code></li>
+<li><code>ItemTemplateSelector </code></li>
+</ul>
+
+<p>Therefore, to begin with, I exposed these properties in my control. I used the <code>AddOwner</code> method of the appropriate <code>DependencyProperty</code> objects which are part of the <code>ItemsControl</code> class. Here's how it's done for one property, it's similar to the other two.</p>
+
+<pre lang="cs">public static readonly DependencyProperty ItemsSourceProperty =
+    ItemsControl.ItemsSourceProperty.AddOwner(
+        typeof(AutoCompleteTextBox), 
+        new UIPropertyMetadata(null, OnItemsSourceChanged));</pre>
+
+<p>Notice that I am assigning a callback method to each of the properties, in the callback method I &quot;forward&quot; the property to the internal list box (with some additional logic).</p>
+
+<p>Next I provide three more properties:</p>
+
+<ul class="property">
+<li><code>Binding</code> - A dependency property which holds the binding used to extract the text to use for auto-completion</li>
+
+<li><code>MaxCompletions</code> - A dependency property for limiting the number of completion results shown</li>
+
+<li><code>Filter</code> - A basic property which holds the callback delegate for filtering the items collection based on the text entered</li>
+</ul>
+
+<p>The auto-complete logic works as follows: For each character typed, the collection view of the list box is refiltered, if at least one match is found, the popup is opened and the list is displayed. A completion entry may be selected by clicking or by using the keyboard. Once a completion entry is chosen, the text obtained using the <code>Binding</code> property from the selected item is put into the text box content, and the popup is closed.</p>
+
+<p>The auto-completion completes successfully in one of the following cases:</p>
+
+<ul>
+<li>The user clicks on an item in the list. </li>
+
+<li>The user navigates the list using the arrow keys and presses the <code>Return</code>/<code>Enter</code> key or the <code>Tab</code> key on an item. </li>
+</ul>
+
+<p>If the user chose a completion entry by using the keyboard and pressing <code>Tab</code>, the focus also moves to the next control in the tab order of the window.</p>
+
+<p>The auto-completion is aborted in one of the following cases:</p>
+
+<ul>
+<li>The user clicks anywhere outside the control area. </li>
+
+<li>The user hits <code>Escape</code>. </li>
+
+<li>The focus is on the text box itself and the user hits <code>Tab</code>. </li>
+</ul>
+
+<h3>Evaluating the Binding</h3>
+
+<p>Those of you who are familiar with the previous version of my article, know that 
+    I used a dirty hack to transfer the binding from the <code>Binding</code> property of the 
+    text box to the data object that is retrieved from the completion list. I 
+    recently discovered that I was doing this the wrong way by trying to set the 
+    binding on a dummy <code>DependencyObject</code>, and by using a <code>FrameworkElement</code> instead, I 
+    was able to use the existing binding and take advantage of the behavior where 
+    the default source of the binding is to the <code>DataContext</code> property.</p>
+
+<pre lang="cs">// Retrieve the Binding object from the control.
+var originalBinding = BindingOperations.GetBinding(this, BindingProperty);
+if (originalBinding == null) return;
+
+// Set the dummy's DataContext to our selected object.
+dummy.DataContext = obj;
+
+// Apply the binding to the dummy FrameworkElement.
+BindingOperations.SetBinding(dummy, TextProperty, originalBinding);
+
+// Get the binding's resulting value.
+Text = dummy.GetValue(TextProperty).ToString();
+</pre>
+
+<p>The &#39;hack&#39; version is still present in the source download comments, for those 
+    who are interested.</p>
+
+<h3>Limiting the Completions List</h3>
+
+<p>Sometimes the items collection used as the source for completion is very large and consists of thousands of entries. If we do not limit the completions list in some way, we would get a big performance hit on the first few characters we type, because of the time it takes the WPF framework to generate all the visuals that populate the list. We could iterate manually over the collection view and generate a list for display, but this will cause a new list to be generated for every key press. The better way would be to somehow cause the collection view to only expose its first (n) elements.</p>
+
+<p>This is where I had to get creative. To accomplish that, I created a class called <code>LimitedListCollectionView</code> which inherits from <code>ListCollectionView</code>, and bounds size the collection it exposes according to some parameter. Then I overrode the <code>Count</code> property, and the <code>MoveCurrentToNext</code>/<code>Last</code>/<code>Previous</code>/<code>Position</code> methods: </p>
+
+<pre lang="cs">public override int Count { get { return Math.Min(base.Count, Limit); } }
+
+public override bool MoveCurrentToLast()
+{
+    return base.MoveCurrentToPosition(Count - 1);
+}
+
+public override bool MoveCurrentToNext()
+{
+    if (base.CurrentPosition == Count - 1)
+        return base.MoveCurrentToPosition(base.Count);
+    else 
+        return base.MoveCurrentToNext();
+}
+
+public override bool MoveCurrentToPrevious()
+{
+    if (base.IsCurrentAfterLast)
+        return base.MoveCurrentToPosition(Count - 1);
+    else
+        return base.MoveCurrentToPrevious();
+}
+
+public override bool MoveCurrentToPosition(int position)
+{
+    if (position < Count)
+        return base.MoveCurrentToPosition(position);
+    else
+        return base.MoveCurrentToPosition(base.Count);
+}
+
+#region IEnumerable Members
+
+IEnumerator IEnumerable.GetEnumerator()
+{
+    do
+    {
+        yield return CurrentItem;
+    } while (MoveCurrentToNext());
+}
+
+#endregion
+</pre>
+
+<p>Notice the intricacies there, I allow the caller to iterate on the first <code>Limit</code> elements, once he tries to move past them, he's transported to the end of the collection.</p>
+
+<h3>Other Tricks</h3>
+
+<p>There are some other tricks I used in order to make this control truly feel like it's supposed to, and not like an ugly hack. One of those tricks is having the list selection indicator follow the mouse as it moves. Another is trapping the down arrow keypress and transferring focus to the list box to enable keyboard navigation. Additionally I hooked many input events to properly handle the auto-closing of the completion list in case of lost focus, keypresses, etc. I won't copy/paste all the code here. If you are interested, you may look in the source files.</p>
+        <h2>Advanced Use Case - Google Search Box</h2>
+        <p>In this section I will show step by step how to build a google search box, with 
+            search suggestions as you type. I will start by defining a &quot;view model&quot;. The view 
+            model will serve as the backing store for all the data bindings in this example.</p>
+        <p>
+            <img alt="" src="autocomplete_textbox/ss3.jpg" /></p>
+        <p>
+            <img alt="" src="autocomplete_textbox/ss4.jpg" /></p>
+        <p>The view model defines three properties:</p>
+        <ul class="property">
+            <li><code>QueryText</code> - The backing store for the user's text.</li>
+            <li><code>QueryCollection</code> - The backing store for the completion list.</li>
+            <li><code>WaitMessage</code> - Used to tell the user that a query is running in the background.</li>
+        </ul>
+
+    <p>
+        The <code>QueryCollection</code> property performs a blocking web request to Google&#39;s 
+        servers, and may take a long time to complete, we bind to it in an asynchronous 
+        way, using a <code>PriorityBinding</code>. The <code>WaitMessage</code> property is used as the &quot;fast&quot; 
+        property in that same <code>PriorityBinding</code> to notify the user of the pending query. 
+        An <code>ItemTemplateSelector</code> is used to select the appropriate template for the case 
+        of the wait message.</p>
+    <pre lang="c#">public class ViewModel : INotifyPropertyChanged
+{
+    private List&lt;string&gt; _WaitMessage = new List&lt;string&gt;() { "Please Wait..." };
+    public IEnumerable WaitMessage { get { return _WaitMessage; } }
+
+    private string _QueryText;
+    public string QueryText
+    {
+        get { return _QueryText; }
+        set
+        {
+            if (_QueryText != value)
+            {
+                _QueryText = value;
+                OnPropertyChanged("QueryText");
+                _QueryCollection = null;
+                OnPropertyChanged("QueryCollection");
+            }
+        }
+    }
+
+    public IEnumerable _QueryCollection = null;
+    public IEnumerable QueryCollection
+    {
+        get
+        {
+            QueryGoogle(QueryText);
+            return _QueryCollection;
+        }
+    }
+
+    private void QueryGoogle(string SearchTerm)
+    {
+        string sanitized = HttpUtility.HtmlEncode(SearchTerm);
+        string url = @"http://google.com/complete/search?output=toolbar&q=" + sanitized;
+        WebRequest httpWebRequest = HttpWebRequest.Create(url);
+        var webResponse = httpWebRequest.GetResponse();
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.Load(webResponse.GetResponseStream());
+        var result = xmlDoc.SelectNodes("//CompleteSuggestion");
+        _QueryCollection = result;
+    }
+
+    #region INotifyPropertyChanged Members
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    #endregion
+
+    protected void OnPropertyChanged(string prop)
+    {
+        if (PropertyChanged != null)
+            PropertyChanged(this, new PropertyChangedEventArgs(prop));
+    }
+}
+</pre>
+    <p lang="c#">Next we will create a <code>CollectionViewSource</code> that will hold the results 
+        of the query. Since we want the results to be dynamic, we will bind the <code>Source</code> 
+        property of the <code>CollectionViewSoruce</code> to the <code>QueryCollection</code> property of the view 
+        model. This is where we utilize the <code>PriorityBinding</code> binding class, since we know that 
+        the <code>QueryCollection</code> property is a &quot;slow&quot; operation, we put it together with a 
+        &quot;fast&quot; property in a <code>PriorityBinding</code> object. The WPF framework will use the 
+        &quot;fast&quot; binding until the &quot;slow&quot; one finally provides a value, and then it will 
+        notify everyone that the value has changed. Note that the &quot;slow&quot; binding is 
+        marked with <code>IsAsync=&quot;True&quot;</code>; this causes it to be run in the background, and is 
+        required for the <code>PriorityBinding</code> to function correctly.</p>
+    <pre lang="xml">&lt;CollectionViewSource x:Key="xml"&gt;
+    &lt;CollectionViewSource.Source&gt;
+        &lt;PriorityBinding&gt;
+            &lt;Binding Source="{StaticResource vm}"
+                     Path="QueryCollection"
+                     IsAsync="True"/&gt;
+            &lt;Binding Source="{StaticResource vm}" Path="WaitMessage"/&gt;
+        &lt;/PriorityBinding&gt;
+    &lt;/CollectionViewSource.Source&gt;
+&lt;/CollectionViewSource&gt;</pre>
+    <p lang="xml">Next we declare our auto-complete text box, and properly bind it.</p>
+<pre lang="xml">
+&lt;actb:AutoCompleteTextBox 
+    Text="{Binding Source={StaticResource vm}, Path=QueryText, UpdateSourceTrigger=PropertyChanged}"
+    ItemsSource="{Binding Source={StaticResource xml}}" 
+    ItemTemplateSelector="{StaticResource TemplateSelector}"
+    Binding="{Binding XPath=suggestion/@data}" 
+    MaxCompletions="5"/&gt;</pre>
+    <p lang="xml">
+        Note that we bind the <code>ItemsSource</code> property to our <code>CollectionViewSource</code>, and our 
+        <code>Text</code> property to the view model&#39;s <code>QueryText</code> property. 
+        It&#39;s also important to set the update source trigger properly so that the list 
+        updates as we type.</p>
+    <p lang="xml">
+        Next in line is the visual templating. Since our completion list can be 
+        populated with two types of objects: An XML node list, or a simple list of 
+        strings in the case of the wait message, we need to prepare two templates, and 
+        to use a template selector. Here are the templates:</p>
+    <pre lang="xml">&lt;DataTemplate x:Key="TheItemTemplate"&gt;
+    &lt;Border BorderBrush="Salmon" BorderThickness="2" CornerRadius="5"&gt;
+        &lt;Grid&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width="Auto"/&gt;
+                &lt;ColumnDefinition/&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition/&gt;
+                &lt;RowDefinition/&gt;
+            &lt;/Grid.RowDefinitions&gt;
+            &lt;TextBlock Text="Suggestion:  "/&gt;
+            &lt;TextBlock Grid.Column="1" 
+                       Text="{Binding XPath=suggestion/@data}"/&gt;
+            &lt;TextBlock Grid.Row="1" Text="Results:  "/&gt;
+            &lt;TextBlock Grid.Column="1" 
+                       Grid.Row="1" 
+                       Text="{Binding XPath=num_queries/@int}"/&gt;
+        &lt;/Grid&gt;
+    &lt;/Border&gt;
+&lt;/DataTemplate&gt;
+&lt;DataTemplate x:Key="WaitTemplate"&gt;
+    &lt;TextBlock Text="{Binding}" Background="SlateBlue"/&gt;
+&lt;/DataTemplate&gt;</pre>
+    <p lang="xml">And here&#39;s the template selector definition:</p>
+    <pre lang="c#">public class MyDataTemplateSelector : DataTemplateSelector
+{
+    public override DataTemplate SelectTemplate(
+        object item,
+        DependencyObject container)
+    {
+        Window wnd = Application.Current.MainWindow;
+        if (item is string)
+            return wnd.FindResource("WaitTemplate") as DataTemplate;
+        else
+            return wnd.FindResource("TheItemTemplate") as DataTemplate;
+    }
+}
+</pre>
+    <p>
+        Viola, we&#39;re done. No code-behind is needed for the window, since we don&#39;t need 
+        to assign any special filtering logic to the completion list (we take everything 
+        returned by google).</p>
+    <p>
+        That&#39;s it, enjoy.</p>
+
+<h2>History</h2>
+
+<ul>
+<li>25<sup>th</sup> November, 2009: Initial post </li>
+            <li>27<sup>th</sup> November, 2009: Google search example added</li>
+    <li>1<sup>st</sup> January, 2010: Improved code regarding <code>Binding</code> reapplication.</li>
+</ul>
+
+</span>
+<!-- End Article -->
+
+
+
+
+</div> 
+</body>
+</html>
