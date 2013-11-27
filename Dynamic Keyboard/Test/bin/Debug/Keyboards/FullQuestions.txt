@@ -1,0 +1,6 @@
+What is your name? | May I use the bathroom?
+How old are you? | What was that?
+Where is my backpack? | What is my homework?
+What is your favorite color? | What is your favorite food?
+How much does that cost? | How many siblings do you have?
+Can you help me? | What do you want?
