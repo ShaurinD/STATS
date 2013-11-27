@@ -1,12 +1,36 @@
-﻿Build started 11/24/2013 10:57:52 PM.
-     1>Project "C:\Users\Samuel\Documents\Visual Studio 2012\Projects\GazeDectect\GazeDectect\GazeDectect.vcxproj" on node 2 (Build target(s)).
+﻿Build started 11/27/2013 6:47:27 AM.
+     1>Project "C:\Users\Shaurin Desai\Documents\Visual Studio 2012\Projects\GazeDectect\GazeDectect\GazeDectect.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\opencv\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\GazeDectect.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GazeDectect.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\opencv\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\GazeDectect.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\opencv\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\GazeDectect.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GazeDectect.cpp
          GazeDectect.cpp
-     1>c:\opencv\build\include\opencv2\flann\logger.h(66): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(218) : see declaration of 'fopen'
-     1>Done Building Project "C:\Users\Samuel\Documents\Visual Studio 2012\Projects\GazeDectect\GazeDectect\GazeDectect.vcxproj" (Build target(s)) -- FAILED.
+     1>GazeDectect.cpp(72): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>GazeDectect.cpp(175): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>GazeDectect.cpp(176): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Shaurin Desai\Documents\Visual Studio 2012\Projects\GazeDectect\Release\GazeDectect.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\opencv\build\x86\vc11\lib libpxc.lib libpxcutils.lib opencv_calib3d246.lib opencv_contrib246.lib opencv_core246.lib opencv_features2d246.lib opencv_flann246.lib opencv_gpu246.lib opencv_haartraining_engine.lib opencv_highgui246.lib opencv_imgproc246.lib opencv_legacy246.lib opencv_ml246.lib opencv_nonfree246.lib opencv_objdetect246.lib opencv_photo246.lib opencv_stitching246.lib opencv_ts246.lib opencv_video246.lib opencv_videostab246.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Shaurin Desai\Documents\Visual Studio 2012\Projects\GazeDectect\Release\GazeDectect.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Shaurin Desai\Documents\Visual Studio 2012\Projects\GazeDectect\Release\GazeDectect.lib" /MACHINE:X86 /SAFESEH Release\GazeDectect.obj
+         Release\stdafx.obj
+     1>libpxcutils.lib(util_capture.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_capture.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_segmentation.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_segmentation.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_voice.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_voice.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_gesture.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_gesture.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_face.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_face.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_raw.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_pipeline_raw.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_capture_file.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_capture_file.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>libpxcutils.lib(util_captureimpl.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in GazeDectect.obj
+     1>libpxcutils.lib(util_captureimpl.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in GazeDectect.obj
+     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>C:\Users\Shaurin Desai\Documents\Visual Studio 2012\Projects\GazeDectect\Release\GazeDectect.exe : fatal error LNK1319: 16 mismatches detected
+     1>Done Building Project "C:\Users\Shaurin Desai\Documents\Visual Studio 2012\Projects\GazeDectect\GazeDectect\GazeDectect.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:03.06
+Time Elapsed 00:00:08.06
