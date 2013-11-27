@@ -128,9 +128,9 @@ int _tmain(int argc, _TCHAR* argv[])
 			Point2f leftpup(lcorner1.x + lpupil.x, lcorner1.y - lpupil.y - 10);
 			Point2f rightpup(rcorner1.x + rpupil.x, rcorner1.y - rpupil.y - 10);
 			
-			ellipse(colorMat, leftpup, Size(2, 2), 0, 0, 360, Scalar(100,100,100),2,8);
-			imshow("im", colorMat);
-			if( cvWaitKey(10) >= 0 ) break;
+			//ellipse(colorMat, leftpup, Size(2, 2), 0, 0, 360, Scalar(100,100,100),2,8);
+			//imshow("im", colorMat);
+			//if( cvWaitKey(10) >= 0 ) break;
 			
 			//Cursor control logic
 			//Getting 100 samples
