@@ -9,7 +9,7 @@ Now download the GazeDectect project from the git repo and place it in the Visua
 in your documents folder.  Open the solution file with Visual Studio and build the solution.  
 All the linkers should be correct if you followed the instructions above and it will build successfully.
 Finally just run the program, you won't be able to test out the code unless you have the Intel Creative 
-Gesture Camera.
+Gesture Camera connected to your computer by USB.
 
 [1] http://software.intel.com/en-us/vcsource/tools/perceptual-computing-sdk
 [2] http://opencv.org/downloads.html
