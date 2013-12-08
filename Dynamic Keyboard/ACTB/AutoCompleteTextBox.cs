@@ -312,7 +312,7 @@ namespace Aviad.WPF.Controls
                 i--;
             }
             Text = Text.Remove(i);
-            Text += obj;
+            Text += obj + " ";
            // Text += dummy.GetValue(TextProperty).ToString();
             SelectionStart = Text.Length;
             suppressEvent = false;

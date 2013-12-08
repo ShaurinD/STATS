@@ -75,6 +75,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AutoCompleteEntry.cs" />
     <Compile Include="Keyboard.cs" />
     <Compile Include="KeyButton.cs" />
     <Compile Include="Window1.xaml.cs">

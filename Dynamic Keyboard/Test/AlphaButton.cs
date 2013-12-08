@@ -36,6 +36,7 @@ namespace Test
             this.uppercase = _uppercase;
             this.lowercase = _lowercase;
             this.tb = tb;
+            this.Margin = new Thickness(3);
             this.Click += AlphaButton_Click;
             this.curKeyboard = curKeyboard;
         }
@@ -61,8 +62,21 @@ namespace Test
             int len = tb.SelectionLength;
             string firstHalf = tb.Text.Substring(0, start + len);
             string secondHalf = tb.Text.Substring(start + len);
-            tb.Text = firstHalf + this.Content.ToString() + secondHalf;
-            tb.SelectionStart = start + this.Content.ToString().Length;
+            char c = this.Content.ToString()[0];
+            bool addspace = false;
+            if (tb.Text.Length == 0)
+            {
+                c = Char.ToUpper(this.Content.ToString()[0]);
+            }
+            else if (firstHalf[firstHalf.Length - 1] == '.' || firstHalf[firstHalf.Length - 1] == '?')
+            {
+                addspace = true;
+                c = Char.ToUpper(this.Content.ToString()[0]);
+            }
+            string space = addspace ? " " : "";
+            tb.Text = firstHalf + space + c + this.Content.ToString().Substring(1) + secondHalf;
+            int offset = addspace ? 1 : 0;
+            tb.SelectionStart = start + offset + this.Content.ToString().Length;
             tb.Focus();
             curKeyboard.ShiftHandler();
         }

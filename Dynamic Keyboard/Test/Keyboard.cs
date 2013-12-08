@@ -46,14 +46,19 @@ namespace Test
                         int index = line.IndexOf("|");
                         if (index == -1)
                         {
-                            throw new ArgumentException();
+                            line = line.Trim();
+                            lower.Add(line);
+                            upper.Add(line);
                         }
-                        string up = line.Substring(0, index);
-                        up = up.Trim();
-                        string low = line.Substring(index + 1);
-                        low = low.Trim();
-                        upper.Add(up);
-                        lower.Add(low);
+                        else
+                        {
+                            string up = line.Substring(0, index);
+                            up = up.Trim();
+                            string low = line.Substring(index + 1);
+                            low = low.Trim();
+                            upper.Add(up);
+                            lower.Add(low);
+                        }
                         i++;
                     }
                 }

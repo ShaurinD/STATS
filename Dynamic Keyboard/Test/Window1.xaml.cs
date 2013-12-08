@@ -20,6 +20,7 @@ using Aviad.WPF.Controls;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using Microsoft.VisualBasic;
+using System.ComponentModel;
 
 
 namespace Test
@@ -65,6 +66,7 @@ namespace Test
             Caps.Click += Caps_Click;
             SwitchKeyboard.Click += SwitchKeyboard_Click;
             AddKeyboard.Click += AddKeyboard_Click;
+            SaveText.Click += SaveText_Click;
             loadSavedData();
         }
 
@@ -156,9 +158,8 @@ namespace Test
             text.TextWrapping = TextWrapping.Wrap;
             text.Text = "INSTRUCTIONS : Select a type of keyboard to create above. Buttons will be bigger for sentences and smaller for letters."
             + " After selecting a type, you will be prompted to enter a name for the keyboard. Once you enter a keyboard name, a text file will open. In the text file type the buttons you want " +
-            "to be displayed. Each line is expected to have two values, the first for the upper case value and the second for the lower case value. (Shift and Caps Lock will toggle these values) " + 
-            "These values should be seperated by a |. Save " + 
-            "the text file when you are done. Then press the load button to load the new keyboard. You must load the keyboard to access the new keyboard through the switch keyboard button.";
+            "to be displayed. Give each button should have its own line in the text file. Save " + "the text file when you are done. Then press the load button to load the new keyboard." +
+            " You must load the keyboard to access the new keyboard through the switch keyboard button.";
             col1.Children.Add(text);
         }
 
@@ -422,6 +423,46 @@ namespace Test
             int start = tb.SelectionStart;
             string firstHalf = tb.Text.Substring(0, start);
             string secondHalf = tb.Text.Substring(start);
+            int index = firstHalf.LastIndexOf(" ");
+            string word = "";
+            if (index != -1)
+            {
+                word = firstHalf.Substring(index + 1);
+            }
+            else
+            {
+                word = firstHalf;
+            }
+            if (word[word.Length-1] == '.' || word[word.Length-1] == '?' || word[word.Length-1] == ',')
+                word = word.Substring(0, word.Length - 1);
+            word = word.ToLower();
+            if(!ViewModel.wordBank.ContainsKey(word)) {
+                for (int i = word.Length; i > 0; i--)
+                {
+                    string hash = word.Substring(0, i);
+                    if (!ViewModel.wordBank.ContainsKey(hash))
+                    {
+                        ViewModel.wordBank[hash] = new List<AutoCompleteEntry>();
+                    }
+                    if (!ViewModel.wordBank[hash].Any(ac => ac.value == word))
+                    {
+                        AutoCompleteEntry ac = new AutoCompleteEntry(word);
+                        ViewModel.wordBank[hash].Add(ac);
+                    }
+                    else 
+                    {
+                        foreach (AutoCompleteEntry en in ViewModel.wordBank[hash])
+                        {
+                            if (en.value == word)
+                            {
+                                en.count++;
+                                break;
+                            }
+                        }
+                    }
+                    ViewModel.wordBank[hash] = ViewModel.wordBank[hash].OrderBy(x => x.count).ToList();
+                }
+            }
             tb.Text = firstHalf + " " + secondHalf;
             tb.Focus();
             tb.SelectionStart = start + 1;
@@ -490,6 +531,42 @@ namespace Test
         private void unhighlight(Button btn)
         {
             btn.ClearValue(Button.BackgroundProperty);
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            string path = @"Config\AC.txt";
+            using (StreamWriter sw = new StreamWriter(path, false))
+            {
+                foreach (KeyValuePair<string, List<AutoCompleteEntry>> pair in ViewModel.wordBank)
+                {
+                    foreach (AutoCompleteEntry ent in pair.Value)
+                    {
+                        sw.WriteLine(ent.value + " " + ent.count);
+                    }
+                }
+            }
+        }
+        private void SaveText_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += (s, args) => SavedText();
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Start();
+            //SaveText.Background = Brushes.Yellow;
+            string filename = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+            string path = @"SavedFiles\" + filename;
+            StreamWriter storeText = new StreamWriter(path, true);
+            storeText.WriteLine(tb.Text);
+            storeText.Close();
+            SaveText.Background = Brushes.Orange;
+            SaveText.Content = "Text Saved!";
+        }
+
+        private void SavedText()
+        {
+            SaveText.ClearValue(Button.BackgroundProperty);
+            SaveText.Content = "Save Text";
         }
     }
 }
