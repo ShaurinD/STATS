@@ -99,7 +99,7 @@ namespace Test
         private void OnClickOp(object sender, RoutedEventArgs e)
         {
             Button pressed = (Button)sender;
-            if (current.Text.Length == 0 && !PrevIsNum)
+            if (current.Text.Length == 0 && overall.Text.Length == 0)
             {
                 return;
             }

@@ -39,8 +39,9 @@ namespace Test
             this.Margin = new Thickness(3);
             this.Click += AlphaButton_Click;
             this.curKeyboard = curKeyboard;
+            this.Style = (Style)Application.Current.Resources["buttonStyle"];
         }
-
+ 
         public void setWidth(int width) {
             this.Width = width;
         }

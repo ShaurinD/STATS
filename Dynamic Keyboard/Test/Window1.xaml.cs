@@ -21,6 +21,8 @@ using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using Microsoft.VisualBasic;
 using System.ComponentModel;
+using System.Speech.Synthesis;
+using System.Threading.Tasks;
 
 
 namespace Test
@@ -67,6 +69,8 @@ namespace Test
             SwitchKeyboard.Click += SwitchKeyboard_Click;
             AddKeyboard.Click += AddKeyboard_Click;
             SaveText.Click += SaveText_Click;
+            TextToSpeech.Click += TextToSpeech_Click;
+            Calculator.Click += Calculator_Click;
             loadSavedData();
         }
 
@@ -359,6 +363,12 @@ namespace Test
             LoadRecent();
         }
 
+        private void TextToSpeech_Click(object send, RoutedEventArgs e)
+        {
+            SpeechSynthesizer reader = new SpeechSynthesizer();
+            reader.SpeakAsync(tb.Text);
+        }
+
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -565,6 +575,12 @@ namespace Test
             storeText.Close();
             SaveText.Background = Brushes.Orange;
             SaveText.Content = "Text Saved!";
+            Window2 calculator = new Window2();
+            calculator.Show();
+        }
+
+        private void Calculator_Click(object sender, RoutedEventArgs e)
+        {
             Window2 calculator = new Window2();
             calculator.Show();
         }

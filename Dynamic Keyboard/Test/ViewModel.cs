@@ -64,14 +64,6 @@ namespace Test
 
         private void QueryGoogle(string SearchTerm)
         {
-            Debug.Print("Query: " + SearchTerm);
-            string sanitized = HttpUtility.HtmlEncode(SearchTerm);
-            string url = @"http://google.com/complete/search?output=toolbar&q=" + sanitized;
-            WebRequest httpWebRequest = HttpWebRequest.Create(url);
-            var webResponse = httpWebRequest.GetResponse();
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(webResponse.GetResponseStream());
-            var result = xmlDoc.SelectNodes("//CompleteSuggestion");
             List<string> myList = new List<string>();
             HashSet<string> words = new HashSet<string>();
             int index = SearchTerm.LastIndexOf(" ");
@@ -141,35 +133,6 @@ namespace Test
                         }
                         myList.Add(preserveCaps);
                     }
-                }
-            }
-          
-            foreach (XmlNode node in result)
-            {
-                string preserveCaps = "";
-                String str = node.SelectSingleNode("suggestion").Attributes["data"].Value;
-                int space = str.IndexOf(" ");
-                if (space != -1)
-                    str = str.Substring(0, space);
-                if (!words.Contains(str.ToLower()))
-                {
-                    words.Add(str.ToLower());
-                    int i = 0;
-                    for (i = 0; i < currentWord.Length; i++)
-                    {
-                        if (currentWord[i] == char.ToUpper(currentWord[i]))
-                        {
-                            preserveCaps += char.ToUpper(str[i]);
-                        }
-                        else
-                            preserveCaps += str[i];
-                    }
-                    while(i < str.Length)
-                    {
-                        preserveCaps += str[i];
-                        i++;
-                    }
-                    myList.Add(preserveCaps);
                 }
             }
             _QueryCollection = myList;

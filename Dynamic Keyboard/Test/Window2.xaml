@@ -4,8 +4,8 @@
         Title="Calculator" Height="600" Width="500" Background="LightGray">
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
 

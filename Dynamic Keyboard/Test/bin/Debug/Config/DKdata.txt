@@ -1,7 +1,5 @@
 Standard.txt letter
 Questions.txt word
 FullQuestions.txt sentence
-Calculator.txt letter
 Number.txt letter
 Custom.txt letter
-.txt letter
