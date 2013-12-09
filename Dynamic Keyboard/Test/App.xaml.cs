@@ -12,5 +12,9 @@ namespace Test
     /// </summary>
     public partial class App : Application
     {
+        private void AppStartUp(object sender, StartupEventArgs e)
+        {
+
+        }
     }
 }

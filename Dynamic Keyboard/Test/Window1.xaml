@@ -35,6 +35,61 @@
         <DataTemplate x:Key="WaitTemplate">
             <TextBlock Text="{Binding}" Background="SlateBlue"/>
         </DataTemplate>
+ <!--      <Style x:Key="DialogButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Rectangle x:Name="GelBackground" Opacity="1" RadiusX="9" RadiusY="9"
+                                   Fill="{TemplateBinding Background}" StrokeThickness="0.35">
+                                <Rectangle.Stroke>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FF6495ED" Offset="0" />
+                                        <GradientStop Color="#FF6495ED" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+                            <Rectangle x:Name="GelShine" Margin="2,2,2,0" VerticalAlignment="Top" RadiusX="6" RadiusY="6"
+                                   Opacity="1" Stroke="Transparent" Height="15px">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FF6495ED" Offset="0"/>
+                                        <GradientStop Color="Transparent" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Brown">
+
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Fill" TargetName="GelBackground">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="Blue" Offset="0"/>
+                                            <GradientStop Color="Blue" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Fill" TargetName="GelBackground" Value="LightGray">
+
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FF4169E1"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="55"/>
+            <Setter Property="Height" Value="30"/>
+        </Style> -->
     </Window.Resources>
     <Grid Name="Layout">
         <Grid.Resources>
@@ -58,16 +113,16 @@
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
-        <Button Content="Save Text" Margin="265,490,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="250" FontSize="30"/>
+        <Button Content="Save Text" Margin="265,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="250" FontSize="30" />
         <Button Content="Enter" Margin="863,258,0,0" Name="EnterButton" Style="{StaticResource bigButtons}"></Button>
         <Button Content="Backspace" Margin="863,180,0,0" Name="Backspace" Style="{StaticResource bigButtons}"></Button>
-        <Button Content="Switch Keyboard" Margin="763,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="250" FontSize="30"/>
-        <Button Content="Add Keyboard" Margin="10,494,0,0" Name="AddKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="250" FontSize="30"/>
+        <Button Content="Switch Keyboard" Margin="763,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="250" FontSize="30" />
+        <Button Content="Add Keyboard" Margin="10,494,0,0" Name="AddKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="250" FontSize="30" />
         <ToggleButton Content="Shift" Margin="863,336,0,0" Name="Shift" Style="{StaticResource bigToggleButtons}"></ToggleButton>
-        <Button Content="Space" Margin="97,415,0,0" Name="Space" Height="72" Width="590" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"></Button>
+        <Button Content="Space" Margin="97,415,0,0" Name="Space" Height="72" Width="590" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" ></Button>
         <ToggleButton Content="CapsLock" Margin="863,414,0,0" Name="Caps" Style="{StaticResource bigToggleButtons}"></ToggleButton>
-        <Button Margin="693,415,0,0" Name="LeftArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"></Button>
-        <Button Margin="778,415,0,0" Name="RightArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"></Button>
+        <Button Margin="693,415,0,0" Name="LeftArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" ></Button>
+        <Button Margin="778,415,0,0" Name="RightArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" ></Button>
         <StackPanel Name="col1" Margin ="10,177,0,0" VerticalAlignment="Top" Width="1000" Height="250"  HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col2" Margin ="95,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col3" Margin ="180,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>

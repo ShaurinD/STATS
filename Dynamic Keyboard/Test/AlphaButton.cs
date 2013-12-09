@@ -64,6 +64,7 @@ namespace Test
             string secondHalf = tb.Text.Substring(start + len);
             char c = this.Content.ToString()[0];
             bool addspace = false;
+            bool deletespace = false;
             if (tb.Text.Length == 0)
             {
                 c = Char.ToUpper(this.Content.ToString()[0]);
@@ -73,10 +74,31 @@ namespace Test
                 addspace = true;
                 c = Char.ToUpper(this.Content.ToString()[0]);
             }
-            string space = addspace ? " " : "";
-            tb.Text = firstHalf + space + c + this.Content.ToString().Substring(1) + secondHalf;
-            int offset = addspace ? 1 : 0;
-            tb.SelectionStart = start + offset + this.Content.ToString().Length;
+            if (tb.Text.Length > 1 && (firstHalf[firstHalf.Length - 2] == '.' || firstHalf[firstHalf.Length - 2] == '?'))
+            {
+                c = Char.ToUpper(this.Content.ToString()[0]);
+            }
+
+            if ((c == '.' || c == '?') && tb.Text.Length > 0)
+            {
+                if (firstHalf[firstHalf.Length - 1] == ' ')
+                {
+                    int start2 = tb.SelectionStart;
+                    string firstHalf2 = tb.Text.Substring(0, start2 - 1);
+                    string secondHalf2 = tb.Text.Substring(start2 - 1, 1);
+                    tb.Text = firstHalf2 + c + secondHalf2;
+                    tb.SelectionStart = start2;
+                    deletespace = true;
+                }
+            }
+
+            if (!deletespace)
+            {
+                string space = addspace ? " " : "";
+                tb.Text = firstHalf + space + c + this.Content.ToString().Substring(1) + secondHalf;
+                int offset = addspace ? 1 : 0;
+                tb.SelectionStart = start + offset + this.Content.ToString().Length;
+            }
             tb.Focus();
             curKeyboard.ShiftHandler();
         }

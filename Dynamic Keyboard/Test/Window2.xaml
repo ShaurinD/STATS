@@ -1,0 +1,93 @@
+﻿<Window x:Class="Test.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Calculator" Height="600" Width="500" Background="LightGray">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0"/>
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Blue" />
+                                <Setter Property="Foreground" Value="Yellow" />
+                                <Setter TargetName="PathIcon" Property="Fill" Value="Black" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="Yellow" />
+                                <Setter Property="Foreground" Value="Blue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    
+    <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="15*" />
+            <RowDefinition Height="22*" />
+            <RowDefinition Height="22*" />
+            <RowDefinition Height="22*" />
+            <RowDefinition Height="22*" />
+            <RowDefinition Height="22*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33*" />
+            <ColumnDefinition Width="33*" />
+            <ColumnDefinition Width="33*" />
+            <ColumnDefinition Width="33*" />
+            <ColumnDefinition Width="33*" />
+        </Grid.ColumnDefinitions>
+
+
+        <TextBox Name="overall" Background="LightGray" FontSize="25" TextAlignment="Right" Grid.Row="0" Grid.ColumnSpan="5" Margin="5,5,5,0" />
+        <TextBox Name="current" Background="LightGray" FontSize="40" TextAlignment="Right" Grid.Row="1" Grid.ColumnSpan="5" Margin="5,0,5,5" />
+        
+        <Button Content="←" Grid.Row="2" Grid.Column="0" Margin="1.5,1.5,1.5,1.5" Click="Backspace_Click" FontSize="25"/>
+        <Button Content="CE" Grid.Row="2" Grid.Column="1" Margin="1.5,1.5,1.5,1.5" Click="ClearAll_Click" FontSize="25"/>
+        <Button Content="C" Grid.Row="2" Grid.Column="2" Margin="1.5,1.5,1.5,1.5" Click="Clear_Click" FontSize="25"/>
+        <Button Content="±" Grid.Row="2" Grid.Column="3" Margin="1.5,1.5,1.5,1.5" Click="Negate" FontSize="25"/>
+
+        <Button Content="1" Grid.Row="3" Grid.Column="0" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="4" Grid.Row="4" Grid.Column="0" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="7" Grid.Row="5" Grid.Column="0" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="2" Grid.Row="3" Grid.Column="1" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="5" Grid.Row="4" Grid.Column="1" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="8" Grid.Row="5" Grid.Column="1" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="3" Grid.Row="3" Grid.Column="2" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="6" Grid.Row="4" Grid.Column="2" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="9" Grid.Row="5" Grid.Column="2" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+        <Button Content="0" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="1.5,1.5,1.5,1.5"  Click="OnClickNum" FontSize="25"/>
+        <Button Content="." Grid.Row="6" Grid.Column="2" Margin="1.5,1.5,1.5,1.5" Click="OnClickNum" FontSize="25"/>
+    
+        <Button Content="/" Grid.Row="3" Grid.Column="3" Margin="1.5,1.5,1.5,1.5" Click="OnClickOp" FontSize="25"/>
+        <Button Content="*" Grid.Row="4" Grid.Column="3" Margin="1.5,1.5,1.5,1.5" Click="OnClickOp" FontSize="25"/>
+        <Button Content="-" Grid.Row="5" Grid.Column="3" Margin="1.5,1.5,1.5,1.5" Click="OnClickOp" FontSize="25"/>
+        <Button Content="+" Grid.Row="6" Grid.Column="3" Margin="1.5,1.5,1.5,1.5" Click="OnClickOp" FontSize="25"/>
+        <Button Content="^" Grid.Row="3" Grid.Column="4" Margin="1.5,1.5,1.5,1.5" Click="OnClickOp" FontSize="25"/>
+        
+        <Button Content="√" Grid.Row="4" Grid.Column="4" Margin="1.5,1.5,1.5,1.5" Click="SquareRoot" FontSize="25"/>
+        <Button Content="Exit" Grid.Row="2" Grid.Column="4" Margin="1.5,1.5,1.5,1.5" Click="Exit" FontSize="25"/>
+        <Button Content="=" Grid.Row="5" Grid.Column="4" Margin="1.5,1.5,1.5,1.5" Click="Solve" Grid.RowSpan="2" FontSize="25"/>
+
+
+    </Grid>
+</Window>

@@ -42,7 +42,7 @@ namespace Test
         string curFilename;
         public Dictionary<string, string> filenameToType = new Dictionary<string, string>();
         HashSet<string> usedFiles = new HashSet<string>();
-     
+
         public Window1()
         {
             InitializeComponent();
@@ -53,8 +53,8 @@ namespace Test
             ShowKeyboard("Standard.txt");
             tb.SelectionStart = 0;
             tb.TextWrapping = TextWrapping.Wrap;
-            LeftArrow.Content = "<-";
-            RightArrow.Content = "->";
+            LeftArrow.Content = "←";
+            RightArrow.Content = "→";
             initializeAddKeyButtons();
             EnterButton.Click += EnterButton_Click;
             Backspace.Click += BackspaceButton_Click;
@@ -433,34 +433,38 @@ namespace Test
             {
                 word = firstHalf;
             }
-            if (word[word.Length-1] == '.' || word[word.Length-1] == '?' || word[word.Length-1] == ',')
-                word = word.Substring(0, word.Length - 1);
-            word = word.ToLower();
-            if(!ViewModel.wordBank.ContainsKey(word)) {
-                for (int i = word.Length; i > 0; i--)
+            if (word.Length != 0)
+            {
+                if (word[word.Length - 1] == '.' || word[word.Length - 1] == '?' || word[word.Length - 1] == ',')
+                    word = word.Substring(0, word.Length - 1);
+                word = word.ToLower();
+                if (!ViewModel.wordBank.ContainsKey(word))
                 {
-                    string hash = word.Substring(0, i);
-                    if (!ViewModel.wordBank.ContainsKey(hash))
+                    for (int i = word.Length; i > 0; i--)
                     {
-                        ViewModel.wordBank[hash] = new List<AutoCompleteEntry>();
-                    }
-                    if (!ViewModel.wordBank[hash].Any(ac => ac.value == word))
-                    {
-                        AutoCompleteEntry ac = new AutoCompleteEntry(word);
-                        ViewModel.wordBank[hash].Add(ac);
-                    }
-                    else 
-                    {
-                        foreach (AutoCompleteEntry en in ViewModel.wordBank[hash])
+                        string hash = word.Substring(0, i);
+                        if (!ViewModel.wordBank.ContainsKey(hash))
                         {
-                            if (en.value == word)
+                            ViewModel.wordBank[hash] = new List<AutoCompleteEntry>();
+                        }
+                        if (!ViewModel.wordBank[hash].Any(ac => ac.value == word))
+                        {
+                            AutoCompleteEntry ac = new AutoCompleteEntry(word);
+                            ViewModel.wordBank[hash].Add(ac);
+                        }
+                        else
+                        {
+                            foreach (AutoCompleteEntry en in ViewModel.wordBank[hash])
                             {
-                                en.count++;
-                                break;
+                                if (en.value == word)
+                                {
+                                    en.count++;
+                                    break;
+                                }
                             }
                         }
+                        ViewModel.wordBank[hash] = ViewModel.wordBank[hash].OrderBy(x => x.count).ToList();
                     }
-                    ViewModel.wordBank[hash] = ViewModel.wordBank[hash].OrderBy(x => x.count).ToList();
                 }
             }
             tb.Text = firstHalf + " " + secondHalf;
@@ -561,6 +565,8 @@ namespace Test
             storeText.Close();
             SaveText.Background = Brushes.Orange;
             SaveText.Content = "Text Saved!";
+            Window2 calculator = new Window2();
+            calculator.Show();
         }
 
         private void SavedText()
