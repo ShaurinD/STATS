@@ -105,6 +105,36 @@ namespace Test
             sentButton.VerticalAlignment = VerticalAlignment.Top;
             sentButton.FontSize = 32;
             sentButton.Click += sentButton_Click;
+            finishButton.Background = Brushes.Black;
+            finishButton.Foreground = Brushes.White;
+            lettersButton.Background = Brushes.Black;
+            lettersButton.Foreground = Brushes.White;
+            wordsButton.Background = Brushes.Black;
+            wordsButton.Foreground = Brushes.White;
+            sentButton.Background = Brushes.Black;
+            sentButton.Foreground = Brushes.White;
+            finishButton.MouseEnter += AlphaButton_MouseEnter;
+            finishButton.MouseLeave += AlphaButton_MouseLeave;
+            lettersButton.MouseEnter += AlphaButton_MouseEnter;
+            lettersButton.MouseLeave += AlphaButton_MouseLeave;
+            wordsButton.MouseEnter += AlphaButton_MouseEnter;
+            wordsButton.MouseLeave += AlphaButton_MouseLeave;
+            sentButton.MouseEnter += AlphaButton_MouseEnter;
+            sentButton.MouseLeave += AlphaButton_MouseLeave;
+        }
+
+        private void AlphaButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Button temp = (Button)sender;
+            temp.Background = Brushes.Black;
+            temp.Foreground = Brushes.White;
+        }
+
+        private void AlphaButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Button temp = (Button)sender;
+            temp.Background = Brushes.Blue;
+            temp.Foreground = Brushes.Black;
         }
 
         void sentButton_Click(object sender, RoutedEventArgs e)

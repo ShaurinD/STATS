@@ -3,3 +3,4 @@ Questions.txt word
 FullQuestions.txt sentence
 Number.txt letter
 Custom.txt letter
+.txt sentence

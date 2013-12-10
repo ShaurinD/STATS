@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:actb="clr-namespace:Aviad.WPF.Controls;assembly=Aviad.WPF.Controls"
     xmlns:local="clr-namespace:Test"
-    Title="Dynamic Keyboard" Height="610" Width="1250" Background="LightGray">
+    Title="Dynamic Keyboard" Height="610" Width="1250" Background="AliceBlue">
     <Window.Resources>
         <CollectionViewSource x:Key="xml">
             <CollectionViewSource.Source>
@@ -17,8 +17,8 @@
         </CollectionViewSource>
         <local:MyDataTemplateSelector x:Key="TemplateSelector"/>
         <DataTemplate x:Key="TheItemTemplate">
-            <Border BorderBrush="Salmon" BorderThickness="2" CornerRadius="5">
-                <Grid>
+            <Border BorderBrush="Blue" BorderThickness="2" CornerRadius="5">
+                <Grid Background="Black">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition/>
@@ -27,7 +27,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="1" 
+                    <TextBlock Grid.Column="1" Background="Black" Foreground="White"
                                Text="{Binding}"/>
                 </Grid>
             </Border>
@@ -36,72 +36,59 @@
             <TextBlock Text="{Binding}" Background="SlateBlue"/>
         </DataTemplate>
         <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Blue" />
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
 
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="4" Background="{TemplateBinding Background}">
-                            <Grid>
-                                <Path x:Name="PathIcon" Width="15" Height="25" Stretch="Fill" Fill="#4C87B3" HorizontalAlignment="Left" Margin="17,0,0,0"/>
-                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
-                            </Grid>
-                        </Border>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="Yellow" />
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
 
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Blue" />
-                                <Setter Property="Foreground" Value="Yellow" />
-                                <Setter TargetName="PathIcon" Property="Fill" Value="Black" />
-                            </Trigger>
-
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="Yellow" />
-                                <Setter Property="Foreground" Value="Blue" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid Name="Layout">
         <Grid.Resources>
-            <Style x:Key="bigButtons" TargetType="Button">
-                <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-                <Setter Property="Height" Value="72"></Setter>
-                <Setter Property="VerticalAlignment" Value="Top"></Setter>
-                <Setter Property="Width" Value="150"></Setter>
-                <Setter Property="FontSize" Value="30"></Setter>
-            </Style>
             <Style x:Key="bigToggleButtons" TargetType="ToggleButton">
                 <Setter Property="HorizontalAlignment" Value="Left"></Setter>
                 <Setter Property="Height" Value="72"></Setter>
                 <Setter Property="VerticalAlignment" Value="Top"></Setter>
                 <Setter Property="Width" Value="150"></Setter>
-                <Setter Property="FontSize" Value="30"></Setter>
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="Foreground" Value="White" />
                 <Style.Triggers>
-                    <Trigger Property="IsChecked" Value="true">
-                        <Setter Property="Background" Value="Yellow"></Setter>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="Blue" />
+                        <Setter Property="Foreground" Value="Black" />
                     </Trigger>
+
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="Yellow" />
+                        <Setter Property="Foreground" Value="Black" />
+                    </Trigger>
+
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
-        <Button Content="Calculator" Margin="420,494,0,0" Name="Calculator" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="200" FontSize="25" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Text To Speech" Margin="625,494,0,0" Name="TextToSpeech" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="200" FontSize="25" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Save Text" Margin="830,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="200" FontSize="25" />
-        <Button Content="Enter" Margin="863,258,0,0" Name="EnterButton" Style="{StaticResource bigButtons}"></Button>
-        <Button Content="Backspace" Margin="863,180,0,0" Name="Backspace" Style="{StaticResource bigButtons}"></Button>
-        <Button Content="Switch Keyboard" Margin="215,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="200" FontSize="25" />
-        <Button Content="Add Keyboard" Margin="10,494,0,0" Name="AddKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="200" FontSize="25" />
+        <Button Content="Calculator" Margin="413,494,0,0" Name="Calculator" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Text To Speech" Margin="615,494,0,0" Name="TextToSpeech" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Save Text" Margin="815,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Enter" Margin="863,258,0,0" Name="EnterButton" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="150" FontSize="25"  Style="{StaticResource buttonStyle}"/>
+        <Button Content="Backspace" Margin="863,180,0,0" Name="Backspace" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="150" FontSize="25"  Style="{StaticResource buttonStyle}"/>
+        <Button Content="Switch Keyboard" Margin="211,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Add Keyboard" Margin="9,494,0,0" Name="AddKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
         <ToggleButton Content="Shift" Margin="863,336,0,0" Name="Shift" Style="{StaticResource bigToggleButtons}"></ToggleButton>
-        <Button Content="Space" Margin="97,415,0,0" Name="Space" Height="72" Width="590" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" ></Button>
+        <Button Content="Space" Margin="97,415,0,0" Name="Space" Height="72" Width="590" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Style="{StaticResource buttonStyle}"/>
         <ToggleButton Content="CapsLock" Margin="863,414,0,0" Name="Caps" Style="{StaticResource bigToggleButtons}"></ToggleButton>
-        <Button Margin="693,415,0,0" Name="LeftArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" ></Button>
-        <Button Margin="778,415,0,0" Name="RightArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" ></Button>
+        <Button Margin="693,415,0,0" Name="LeftArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Style="{StaticResource buttonStyle}"/>
+        <Button Margin="778,415,0,0" Name="RightArrow" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Style="{StaticResource buttonStyle}"/>
         <StackPanel Name="col1" Margin ="10,177,0,0" VerticalAlignment="Top" Width="1000" Height="250"  HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col2" Margin ="95,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col3" Margin ="180,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>
@@ -112,7 +99,7 @@
         <StackPanel Name="col8" Margin ="605,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col9" Margin ="690,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>
         <StackPanel Name="col10" Margin ="775,177,0,0" VerticalAlignment="Top" Width="1000" Height="250" HorizontalAlignment="Left"></StackPanel>
-        <Button Content="Clear" Margin="12,415,0,0" Name="Clear" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32"></Button>
+        <Button Content="Clear" Margin="12,415,0,0" Name="Clear" Width="80" Height="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" Style="{StaticResource buttonStyle}"/>
         <actb:AutoCompleteTextBox 
             Name="tb" 
             FontSize="30" 

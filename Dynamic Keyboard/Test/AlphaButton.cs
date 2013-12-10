@@ -39,7 +39,22 @@ namespace Test
             this.Margin = new Thickness(3);
             this.Click += AlphaButton_Click;
             this.curKeyboard = curKeyboard;
-            this.Style = (Style)Application.Current.Resources["buttonStyle"];
+            this.Background = Brushes.DarkBlue;
+            this.Foreground = Brushes.Yellow;
+            this.MouseEnter += AlphaButton_MouseEnter;
+            this.MouseLeave += AlphaButton_MouseLeave;
+        }
+
+        private void AlphaButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.Background = Brushes.DarkBlue;
+            this.Foreground = Brushes.Yellow;
+        }
+
+        private void AlphaButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Background = Brushes.Yellow;
+            this.Foreground = Brushes.DarkBlue;
         }
  
         public void setWidth(int width) {
@@ -58,7 +73,8 @@ namespace Test
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
-            this.Background = Brushes.Cyan;
+            this.Background = Brushes.Yellow;
+            this.Foreground = Brushes.Black;
             int start = tb.SelectionStart;
             int len = tb.SelectionLength;
             string firstHalf = tb.Text.Substring(0, start + len);
@@ -106,7 +122,8 @@ namespace Test
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            this.ClearValue(Button.BackgroundProperty);
+            this.Background = Brushes.DarkBlue;
+            this.Foreground = Brushes.White;
         }
 
         private TextBox tb;
