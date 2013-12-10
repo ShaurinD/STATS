@@ -39,22 +39,22 @@ namespace Test
             this.Margin = new Thickness(3);
             this.Click += AlphaButton_Click;
             this.curKeyboard = curKeyboard;
-            this.Background = Brushes.DarkBlue;
-            this.Foreground = Brushes.Yellow;
+            this.Background = Brushes.Black;
+            this.Foreground = Brushes.White;
             this.MouseEnter += AlphaButton_MouseEnter;
             this.MouseLeave += AlphaButton_MouseLeave;
         }
 
         private void AlphaButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.Background = Brushes.DarkBlue;
-            this.Foreground = Brushes.Yellow;
+            this.Background = Brushes.Black;
+            this.Foreground = Brushes.White;
         }
 
         private void AlphaButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = Brushes.Yellow;
-            this.Foreground = Brushes.DarkBlue;
+            this.Background = Brushes.Blue;
+            this.Foreground = Brushes.Black;
         }
  
         public void setWidth(int width) {
@@ -68,13 +68,6 @@ namespace Test
 
         protected void AlphaButton_Click(object sender, RoutedEventArgs e)
         {
-            //Highlight for a few seconds
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            this.Background = Brushes.Yellow;
-            this.Foreground = Brushes.Black;
             int start = tb.SelectionStart;
             int len = tb.SelectionLength;
             string firstHalf = tb.Text.Substring(0, start + len);
@@ -82,7 +75,7 @@ namespace Test
             char c = this.Content.ToString()[0];
             bool addspace = false;
             bool deletespace = false;
-            if (tb.Text.Length == 0)
+            if (tb.Text.Length == 0 || tb.SelectionStart == 0)
             {
                 c = Char.ToUpper(this.Content.ToString()[0]);
             }
@@ -91,12 +84,12 @@ namespace Test
                 addspace = true;
                 c = Char.ToUpper(this.Content.ToString()[0]);
             }
-            if (tb.Text.Length > 1 && (firstHalf[firstHalf.Length - 2] == '.' || firstHalf[firstHalf.Length - 2] == '?'))
+            if (firstHalf.Length > 1 && (firstHalf[firstHalf.Length - 2] == '.' || firstHalf[firstHalf.Length - 2] == '?'))
             {
                 c = Char.ToUpper(this.Content.ToString()[0]);
             }
 
-            if ((c == '.' || c == '?') && tb.Text.Length > 0)
+            if ((c == '.' || c == '?') && firstHalf.Length > 0)
             {
                 if (firstHalf[firstHalf.Length - 1] == ' ')
                 {
@@ -118,12 +111,6 @@ namespace Test
             }
             tb.Focus();
             curKeyboard.ShiftHandler();
-        }
-
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            this.Background = Brushes.DarkBlue;
-            this.Foreground = Brushes.White;
         }
 
         private TextBox tb;

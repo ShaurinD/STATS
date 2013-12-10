@@ -401,22 +401,12 @@ namespace Test
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += (s, args) => unhighlight(Clear);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            Clear.Background = Brushes.Yellow;
-            tb.Focus();
+             tb.Focus();
             tb.Clear();
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += (s, args) => unhighlight(EnterButton);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            EnterButton.Background = Brushes.Yellow;
             int start = tb.SelectionStart;
             string firstHalf = tb.Text.Substring(0, start);
             string secondHalf = tb.Text.Substring(start);
@@ -427,11 +417,6 @@ namespace Test
 
         private void BackspaceButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += (s, args) => unhighlight(Backspace);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            Backspace.Background = Brushes.Yellow;
             int start = tb.SelectionStart;
             if(tb.Text.Length != 0 && start >0)
             {
@@ -455,11 +440,6 @@ namespace Test
 
         private void SpaceButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += (s, args) => unhighlight(Space);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            Space.Background = Brushes.Yellow;
             int start = tb.SelectionStart;
             string firstHalf = tb.Text.Substring(0, start);
             string secondHalf = tb.Text.Substring(start);
@@ -514,11 +494,6 @@ namespace Test
 
         private void LeftButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += (s, args) => unhighlight(LeftArrow);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            LeftArrow.Background = Brushes.Yellow;
             int start = tb.SelectionStart;
             tb.Focus();
             if (start == 0)
@@ -531,11 +506,6 @@ namespace Test
 
         private void RightButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += (s, args) => unhighlight(RightArrow);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start();
-            RightArrow.Background = Brushes.Yellow;
             int start = tb.SelectionStart;
             tb.Focus();
             tb.SelectionStart = start + 1;
@@ -572,11 +542,6 @@ namespace Test
             }
         }
 
-        private void unhighlight(Button btn)
-        {
-            btn.ClearValue(Button.BackgroundProperty);
-        }
-
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
             string path = @"Config\AC.txt";
@@ -597,7 +562,6 @@ namespace Test
             dispatcherTimer.Tick += (s, args) => SavedText();
             dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
             dispatcherTimer.Start();
-            //SaveText.Background = Brushes.Yellow;
             string filename = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + ".txt";
             string path = @"SavedFiles\" + filename;
             StreamWriter storeText = new StreamWriter(path, true);
@@ -605,20 +569,18 @@ namespace Test
             storeText.Close();
             SaveText.Background = Brushes.Orange;
             SaveText.Content = "Text Saved!";
-            Window2 calculator = new Window2();
-            calculator.Show();
-        }
-
-        private void Calculator_Click(object sender, RoutedEventArgs e)
-        {
-            Window2 calculator = new Window2();
-            calculator.Show();
         }
 
         private void SavedText()
         {
             SaveText.ClearValue(Button.BackgroundProperty);
             SaveText.Content = "Save Text";
+        }
+
+        private void Calculator_Click(object sender, RoutedEventArgs e)
+        {
+            Window2 calculator = new Window2();
+            calculator.Show();
         }
     }
 }

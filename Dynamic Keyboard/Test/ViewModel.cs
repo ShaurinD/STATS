@@ -99,7 +99,7 @@ namespace Test
                             AutoCompleteEntry ac = new AutoCompleteEntry(word);
                             ac.count = count;
                             wordBank[key].Add(ac);
-                            wordBank[key] = wordBank[key].OrderBy(x => x.count).ToList();
+                            wordBank[key] = wordBank[key].OrderByDescending(x => x.count).ToList();
                         }
                     }
                 }
@@ -135,6 +135,7 @@ namespace Test
                     }
                 }
             }
+           // myList.OrderByDescending(x => wordBank[lowerCurrentWord.Substring(0, currentWord.Length)]).ToList();
             _QueryCollection = myList;
         }
 

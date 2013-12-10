@@ -34,28 +34,26 @@ namespace Test
             this.Content = text;
             this.win = wind;
             this.Click += KeyButton_Click;
-            this.Background = Brushes.DarkBlue;
-            this.Foreground = Brushes.Yellow;
+            this.Background = Brushes.Black;
+            this.Foreground = Brushes.White;
             this.MouseEnter += AlphaButton_MouseEnter;
             this.MouseLeave += AlphaButton_MouseLeave;
         }
 
         private void AlphaButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.Background = Brushes.DarkBlue;
-            this.Foreground = Brushes.Yellow;
+            this.Background = Brushes.Black;
+            this.Foreground = Brushes.White;
         }
 
         private void AlphaButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Background = Brushes.Yellow;
-            this.Foreground = Brushes.DarkBlue;
+            this.Background = Brushes.Blue;
+            this.Foreground = Brushes.Black;
         }
 
         protected void KeyButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Background = Brushes.Yellow;
-            this.Foreground = Brushes.Black;
             win.ShowKeyboard(this.Content.ToString() + ".txt");
         }
 

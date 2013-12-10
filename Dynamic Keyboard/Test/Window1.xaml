@@ -17,8 +17,8 @@
         </CollectionViewSource>
         <local:MyDataTemplateSelector x:Key="TemplateSelector"/>
         <DataTemplate x:Key="TheItemTemplate">
-            <Border BorderBrush="Blue" BorderThickness="2" CornerRadius="5">
-                <Grid Background="Black">
+            <Border BorderBrush="Yellow" BorderThickness="2" CornerRadius="5">
+                <Grid Background="DarkBlue">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition/>
@@ -27,7 +27,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="1" Background="Black" Foreground="White"
+                    <TextBlock Grid.Column="1" Background="DarkBlue" Foreground="Yellow"
                                Text="{Binding}"/>
                 </Grid>
             </Border>
@@ -42,13 +42,7 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="Blue" />
                     <Setter Property="Foreground" Value="Black" />
-                </Trigger>
-
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="Yellow" />
-                    <Setter Property="Foreground" Value="Black" />
-                </Trigger>
-
+                </Trigger>                
             </Style.Triggers>
         </Style>
     </Window.Resources>
@@ -59,7 +53,7 @@
                 <Setter Property="Height" Value="72"></Setter>
                 <Setter Property="VerticalAlignment" Value="Top"></Setter>
                 <Setter Property="Width" Value="150"></Setter>
-                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontSize" Value="25" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Background" Value="Black" />
                 <Setter Property="Foreground" Value="White" />
@@ -68,18 +62,12 @@
                         <Setter Property="Background" Value="Blue" />
                         <Setter Property="Foreground" Value="Black" />
                     </Trigger>
-
-                    <Trigger Property="IsPressed" Value="True">
-                        <Setter Property="Background" Value="Yellow" />
-                        <Setter Property="Foreground" Value="Black" />
-                    </Trigger>
-
-                </Style.Triggers>
+                 </Style.Triggers>
             </Style>
         </Grid.Resources>
         <Button Content="Calculator" Margin="413,494,0,0" Name="Calculator" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
         <Button Content="Text To Speech" Margin="615,494,0,0" Name="TextToSpeech" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Save Text" Margin="815,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Save Text" Margin="817,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
         <Button Content="Enter" Margin="863,258,0,0" Name="EnterButton" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="150" FontSize="25"  Style="{StaticResource buttonStyle}"/>
         <Button Content="Backspace" Margin="863,180,0,0" Name="Backspace" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="150" FontSize="25"  Style="{StaticResource buttonStyle}"/>
         <Button Content="Switch Keyboard" Margin="211,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
