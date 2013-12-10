@@ -65,13 +65,16 @@
                  </Style.Triggers>
             </Style>
         </Grid.Resources>
-        <Button Content="Calculator" Margin="413,494,0,0" Name="Calculator" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Text To Speech" Margin="615,494,0,0" Name="TextToSpeech" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Save Text" Margin="817,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Add Keyboard" Margin="10,494,0,0" Name="AddKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Switch Keyboard" Margin="154,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Calculator" Margin="298,494,0,0" Name="Calculator" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Text To Speech" Margin="442,494,0,0" Name="TextToSpeech" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Voice Command" Margin="586,494,0,0" Name="SpeechToText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Save Text" Margin="730,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <Button Content="Exit" Margin="874,494,0,0" Name="ExitButton" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        
         <Button Content="Enter" Margin="863,258,0,0" Name="EnterButton" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="150" FontSize="25"  Style="{StaticResource buttonStyle}"/>
         <Button Content="Backspace" Margin="863,180,0,0" Name="Backspace" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="150" FontSize="25"  Style="{StaticResource buttonStyle}"/>
-        <Button Content="Switch Keyboard" Margin="211,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Add Keyboard" Margin="9,494,0,0" Name="AddKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="197" FontSize="25" Style="{StaticResource buttonStyle}"/>
         <ToggleButton Content="Shift" Margin="863,336,0,0" Name="Shift" Style="{StaticResource bigToggleButtons}"></ToggleButton>
         <Button Content="Space" Margin="97,415,0,0" Name="Space" Height="72" Width="590" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Style="{StaticResource buttonStyle}"/>
         <ToggleButton Content="CapsLock" Margin="863,414,0,0" Name="Caps" Style="{StaticResource bigToggleButtons}"></ToggleButton>

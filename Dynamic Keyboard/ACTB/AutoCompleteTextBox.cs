@@ -268,6 +268,7 @@ namespace Aviad.WPF.Controls
 
         private void SetTextValueBySelection(object obj, bool moveFocus)
         {
+            /*
             if (popup != null)
             {
                 InternalClosePopup();
@@ -278,7 +279,7 @@ namespace Aviad.WPF.Controls
                         MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
                 }), System.Windows.Threading.DispatcherPriority.Background);
             }
-
+            */
             // Retrieve the Binding object from the control.
             var originalBinding = BindingOperations.GetBinding(this, BindingProperty);
             if (originalBinding == null) return;
@@ -365,7 +366,7 @@ namespace Aviad.WPF.Controls
                     listBox.Items.Filter = FilterFunc;
             }
         }
-        protected override void OnLostFocus(RoutedEventArgs e)
+        /*protected override void OnLostFocus(RoutedEventArgs e)
         {
             base.OnLostFocus(e);
             if (suppressEvent) return;
@@ -373,7 +374,7 @@ namespace Aviad.WPF.Controls
             {
                 InternalClosePopup();
             }
-        }
+        }*/
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);

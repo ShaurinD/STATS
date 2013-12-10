@@ -22,6 +22,7 @@ using System.Windows.Controls.Primitives;
 using Microsoft.VisualBasic;
 using System.ComponentModel;
 using System.Speech.Synthesis;
+using System.Speech.Recognition;
 using System.Threading.Tasks;
 
 
@@ -44,6 +45,9 @@ namespace Test
         string curFilename;
         public Dictionary<string, string> filenameToType = new Dictionary<string, string>();
         HashSet<string> usedFiles = new HashSet<string>();
+        SpeechRecognitionEngine recoEngine = new SpeechRecognitionEngine();
+        long lastTime = 0;
+        bool voiceOn = false;
 
         public Window1()
         {
@@ -71,12 +75,24 @@ namespace Test
             SaveText.Click += SaveText_Click;
             TextToSpeech.Click += TextToSpeech_Click;
             Calculator.Click += Calculator_Click;
+            SpeechToText.Click += SpeechToText_Click;
+            ExitButton.Click += Exit_Click;
             loadSavedData();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            if ((currentTime - lastTime) < 5000)
+            {
+                this.Close();
+            }
+            lastTime = currentTime;
         }
 
         private void initializeAddKeyButtons()
         {
-            
+
             finishButton.Content = "Load";
             finishButton.Height = 72;
             finishButton.Width = 250;
@@ -160,7 +176,7 @@ namespace Test
             saveData(curFilename, "letter");
             Process.Start(@"notepad.exe", "Keyboards//" + curFilename);
         }
-        
+
         private void clearKeyboard()
         {
             curKeyboard.HideKeys();
@@ -175,7 +191,7 @@ namespace Test
             col9.Children.Clear();
             col10.Children.Clear();
         }
-        
+
         private void AddKeyboard_Click(object sender, RoutedEventArgs e)
         {
             clearKeyboard();
@@ -226,7 +242,7 @@ namespace Test
                 using (StreamWriter sw = File.AppendText(path))
                 {
                     sw.WriteLine(keyboardName);
-                }	
+                }
             }
         }
 
@@ -264,7 +280,9 @@ namespace Test
                     int index = line.IndexOf(" ");
                     string name = line.Substring(0, index);
                     string type = line.Substring(index + 1);
+                    usedFiles.Add(name);
                     filenameToType[name] = type;
+
                 }
             }
         }
@@ -334,7 +352,7 @@ namespace Test
             if (filenameToType[filename] == "letter")
                 showKeyboardLetters();
             else if (filenameToType[filename] == "word")
-                showKeyboardWords();  
+                showKeyboardWords();
             else if (filenameToType[filename] == "sentence")
                 showKeyboardSent();
         }
@@ -401,7 +419,7 @@ namespace Test
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-             tb.Focus();
+            tb.Focus();
             tb.Clear();
         }
 
@@ -418,18 +436,18 @@ namespace Test
         private void BackspaceButton_Click(object sender, RoutedEventArgs e)
         {
             int start = tb.SelectionStart;
-            if(tb.Text.Length != 0 && start >0)
+            if (tb.Text.Length != 0 && start > 0)
             {
                 if (start > 1 && tb.Text.Substring(start - 2, 2) == System.Environment.NewLine)
                 {
-                    string firstHalf = tb.Text.Substring(0, start-2);
+                    string firstHalf = tb.Text.Substring(0, start - 2);
                     string secondHalf = tb.Text.Substring(start);
                     tb.Text = firstHalf + secondHalf;
                     tb.SelectionStart = start - 2;
                 }
                 else
                 {
-                    string firstHalf = tb.Text.Substring(0, start- 1);
+                    string firstHalf = tb.Text.Substring(0, start - 1);
                     string secondHalf = tb.Text.Substring(start);
                     tb.Text = firstHalf + secondHalf;
                     tb.SelectionStart = start - 1;
@@ -569,6 +587,7 @@ namespace Test
             storeText.Close();
             SaveText.Background = Brushes.Orange;
             SaveText.Content = "Text Saved!";
+
         }
 
         private void SavedText()
@@ -582,6 +601,63 @@ namespace Test
             Window2 calculator = new Window2();
             calculator.Show();
         }
+
+        private void SpeechToText_Click(object sender, RoutedEventArgs e)
+        {
+            if (!voiceOn){
+                Choices options = new Choices();
+                options.Add(new string[] { "How Many", "What would you like to eat", "What is your favorite Food", "What would you like to do", "Solve" });
+                GrammarBuilder gb = new GrammarBuilder();
+                gb.Append(options);
+                Grammar g = new Grammar(gb);
+                recoEngine.LoadGrammar(g);
+                recoEngine.RequestRecognizerUpdate();
+                recoEngine.SpeechRecognized += _recognizer_SpeechRecognized;
+                recoEngine.SetInputToDefaultAudioDevice();
+                voiceOn = true;
+                recoEngine.RecognizeAsync(RecognizeMode.Multiple);
+            }
+        }
+
+        void _recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            recoEngine.RecognizeAsyncCancel();
+            voiceOn = false;
+            if (e.Result.Confidence > .7)
+            {
+
+
+
+                if (e.Result.Text == "What would you like to eat" || e.Result.Text == "What is your favorite Food")
+                {
+                    curKeyboard.HideKeys();
+                    curKeyboard.LoadKeyboard("Food.txt", ref tb, filenameToType);
+
+                    ShowKeyboard("Food.txt");
+
+                }
+                else if (e.Result.Text == "What would you like to do")
+                {
+                    curKeyboard.HideKeys();
+                    curKeyboard.LoadKeyboard("Activities.txt", ref tb, filenameToType);
+                    ShowKeyboard("Activities.txt");
+                }
+                else if (e.Result.Text == "How Many")
+                {
+                    curKeyboard.HideKeys();
+                    curKeyboard.LoadKeyboard("Number.txt", ref tb, filenameToType);
+                    ShowKeyboard("Number.txt");
+                }
+                else if (e.Result.Text == "Solve")
+                {
+                    Window2 calculator = new Window2();
+                    calculator.Show();
+                }
+
+
+            }
+
+
+        }
     }
 }
-
