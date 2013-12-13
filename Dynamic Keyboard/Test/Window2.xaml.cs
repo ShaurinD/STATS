@@ -38,7 +38,11 @@ namespace Test
             long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
             if ((currentTime - lastTime) < 5000)
             {
-                this.Close();
+                overall.Clear();
+                numbers.Clear();
+                ops.Clear();
+                current.Clear();
+                this.Hide();
             }
             lastTime = currentTime;
         }

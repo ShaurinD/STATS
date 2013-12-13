@@ -3,4 +3,17 @@ Questions.txt word
 FullQuestions.txt sentence
 Number.txt letter
 Custom.txt letter
-.txt sentence
+Food.txt word
+Places.txt word
+Activities.txt word
+Feelings.txt word
+People.txt word
+Questions.txt word
+Color.txt word
+Football.txt word
+blah.txt word
+wordFile.txt word
+Happy.txt word
+Holidays.txt word
+DC's Keyboard.txt word
+phrases.txt word

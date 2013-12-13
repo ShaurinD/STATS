@@ -1,0 +1,11 @@
+School
+Hospital
+Restaurant
+Home
+MyRoom
+Park
+Bathroom
+Kitchen
+Basement
+DiningRoom
+Attic

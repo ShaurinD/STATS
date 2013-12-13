@@ -3,3 +3,16 @@ Questions
 FullQuestions
 Custom
 Number
+Food
+Places
+Activities
+Feelings
+People
+Color
+Football
+blah
+wordFile
+Happy
+Holidays
+DC's Keyboard
+phrases

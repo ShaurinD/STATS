@@ -1,0 +1,8 @@
+Movie
+Games
+Read
+Go-Outside
+Board-Games
+Sleep
+Eat
+Drink

@@ -1,0 +1,9 @@
+Pizza
+Hot-dog
+Pasta
+IceCream
+Soda
+Chinese
+Mexican
+Italian
+Burger

@@ -10,3 +10,5 @@ the|it
 ?|?
 question|Who
 your|Where
+yes
+no

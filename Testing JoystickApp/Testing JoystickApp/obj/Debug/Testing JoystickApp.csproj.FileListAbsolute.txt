@@ -1,0 +1,17 @@
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\Testing JoystickApp.exe.config
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing JoystickApp.csprojResolveAssemblyReference.cache
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\MainWindow.baml
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\MainWindow.g.cs
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\App.g.cs
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing JoystickApp_MarkupCompile.cache
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing JoystickApp.g.resources
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing_JoystickApp.Properties.Resources.resources
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing JoystickApp.csproj.GenerateResource.Cache
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\Testing JoystickApp.exe
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\Testing JoystickApp.pdb
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\SharpDX.DirectInput.dll
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\SharpDX.dll
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\SharpDX.xml
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\bin\Debug\SharpDX.DirectInput.xml
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing JoystickApp.exe
+c:\users\theo\documents\visual studio 2012\Projects\Testing JoystickApp\Testing JoystickApp\obj\Debug\Testing JoystickApp.pdb

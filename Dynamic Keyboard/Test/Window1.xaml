@@ -69,7 +69,7 @@
         <Button Content="Switch Keyboard" Margin="154,494,0,0" Name="SwitchKeyboard" HorizontalAlignment="Left" Height="72" VerticalAlignment ="Top" Width ="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
         <Button Content="Calculator" Margin="298,494,0,0" Name="Calculator" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
         <Button Content="Text To Speech" Margin="442,494,0,0" Name="TextToSpeech" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
-        <Button Content="Voice Command" Margin="586,494,0,0" Name="SpeechToText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
+        <ToggleButton Content="Voice Command" Margin="586,494,0,0" Name="SpeechToText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource bigToggleButtons}"></ToggleButton>
         <Button Content="Save Text" Margin="730,494,0,0" Name="SaveText" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
         <Button Content="Exit" Margin="874,494,0,0" Name="ExitButton" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="139" FontSize="17" Style="{StaticResource buttonStyle}"/>
         

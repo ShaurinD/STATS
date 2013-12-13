@@ -48,10 +48,13 @@ namespace Test
         SpeechRecognitionEngine recoEngine = new SpeechRecognitionEngine();
         long lastTime = 0;
         bool voiceOn = false;
+        Window2 calculator = null;
+        public Dictionary<string, string> phraseToFilename = new Dictionary<string, string>();
 
         public Window1()
         {
             InitializeComponent();
+            calculator = new Window2();
             curFilename = "Standard.txt";
             filenameToType[curFilename] = "letter";
             curKeyboard = new Keyboard("Standard.txt", ref tb, ref Shift);
@@ -137,6 +140,10 @@ namespace Test
             wordsButton.MouseLeave += AlphaButton_MouseLeave;
             sentButton.MouseEnter += AlphaButton_MouseEnter;
             sentButton.MouseLeave += AlphaButton_MouseLeave;
+            finishButton.Margin = new Thickness(0, 4, 10, 0);
+            lettersButton.Margin = new Thickness(0, 4, 10, 0);
+            wordsButton.Margin = new Thickness(0, 4, 10, 0);
+            sentButton.Margin = new Thickness(0, 4, 10, 0);
         }
 
         private void AlphaButton_MouseLeave(object sender, MouseEventArgs e)
@@ -209,12 +216,14 @@ namespace Test
             text.Text = "INSTRUCTIONS : Select a type of keyboard to create above. Buttons will be bigger for sentences and smaller for letters."
             + " After selecting a type, you will be prompted to enter a name for the keyboard. Once you enter a keyboard name, a text file will open. In the text file type the buttons you want " +
             "to be displayed. Give each button should have its own line in the text file. Save " + "the text file when you are done. Then press the load button to load the new keyboard." +
-            " You must load the keyboard to access the new keyboard through the switch keyboard button.";
+            " YOU MUST LOAD the keyboard to access the new keyboard through the switch keyboard button. If you enter more words than buttons possible those words will be ignored.";
             col1.Children.Add(text);
         }
 
         private void finishButton_Click(object sender, RoutedEventArgs e)
         {
+            string phrase = Microsoft.VisualBasic.Interaction.InputBox("Would you like to link this keyboard to a phrase?", "Phrase", "new", -1, -1);
+            phraseToFilename.Add(phrase, curFilename); 
             if (!usedFiles.Contains(curFilename))
             {
                 writeToMRK(curFilename);
@@ -560,20 +569,6 @@ namespace Test
             }
         }
 
-        public void OnWindowClosing(object sender, CancelEventArgs e)
-        {
-            string path = @"Config\AC.txt";
-            using (StreamWriter sw = new StreamWriter(path, false))
-            {
-                foreach (KeyValuePair<string, List<AutoCompleteEntry>> pair in ViewModel.wordBank)
-                {
-                    foreach (AutoCompleteEntry ent in pair.Value)
-                    {
-                        sw.WriteLine(ent.value + " " + ent.count);
-                    }
-                }
-            }
-        }
         private void SaveText_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -581,7 +576,7 @@ namespace Test
             dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
             dispatcherTimer.Start();
             string filename = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + ".txt";
-            string path = @"SavedFiles\" + filename;
+            string path = @"SavedFiles\" + filename; 
             StreamWriter storeText = new StreamWriter(path, true);
             storeText.WriteLine(tb.Text);
             storeText.Close();
@@ -598,15 +593,40 @@ namespace Test
 
         private void Calculator_Click(object sender, RoutedEventArgs e)
         {
-            Window2 calculator = new Window2();
+           
             calculator.Show();
         }
 
         private void SpeechToText_Click(object sender, RoutedEventArgs e)
         {
-            if (!voiceOn){
+            if (SpeechToText.IsChecked == true)
+            {
+                if (phraseToFilename.Count == 0)
+                {
+                    string line;
+                    using (StreamReader sr = new StreamReader("Config\\Dynamic.txt"))
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            int index = line.IndexOf("|");
+                            string phrase = line.Substring(0, index);
+                            string filename = line.Substring(index + 1);
+                            phraseToFilename.Add(phrase, filename);
+                        }
+                    }
+                }
                 Choices options = new Choices();
-                options.Add(new string[] { "How Many", "What would you like to eat", "What is your favorite Food", "What would you like to do", "Solve" });
+                int size = phraseToFilename.Count;
+                string[] o = new string[size+1];
+                int i = 0;
+                foreach (KeyValuePair<string, string> pair in phraseToFilename)
+                {
+                    o[i] = pair.Key;
+                    i++;
+                }
+                o[i] = "Solve";
+                options.Add(o);
+                // options.Add(new string[] { "How Many", "What would you like to eat", "What is your favorite Food", "What would you like to do", "Solve","Feeling","Where" });
                 GrammarBuilder gb = new GrammarBuilder();
                 gb.Append(options);
                 Grammar g = new Grammar(gb);
@@ -617,18 +637,52 @@ namespace Test
                 voiceOn = true;
                 recoEngine.RecognizeAsync(RecognizeMode.Multiple);
             }
+            else
+            {
+                recoEngine.RecognizeAsyncCancel();
+            }
         }
-
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            string path = @"Config\AC.txt";
+            using (StreamWriter sw = new StreamWriter(path, false))
+            {
+                foreach (KeyValuePair<string, List<AutoCompleteEntry>> pair in ViewModel.wordBank)
+                {
+                    foreach (AutoCompleteEntry ent in pair.Value)
+                    {
+                        sw.WriteLine(ent.value + " " + ent.count);
+                    }
+                }
+            }
+            string path2 = @"Config\Dynamic.txt";
+            using (StreamWriter sw2 = new StreamWriter(path2, false))
+            {
+                foreach (KeyValuePair<string, string> pair in phraseToFilename)
+                {
+                    sw2.WriteLine(pair.Key + "|" + pair.Value);
+                }
+            }
+            calculator.Close();
+        }
         void _recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             recoEngine.RecognizeAsyncCancel();
-            voiceOn = false;
-            if (e.Result.Confidence > .7)
+            SpeechToText.IsChecked = false;
+            if (e.Result.Confidence > .8)
             {
-
-
-
-                if (e.Result.Text == "What would you like to eat" || e.Result.Text == "What is your favorite Food")
+                if (e.Result.Text == "Solve")
+                {
+                    calculator.Show();
+                }
+                if(phraseToFilename.Any(x => x.Key == e.Result.Text)) {
+                    
+                    curKeyboard.HideKeys();
+                    curKeyboard.LoadKeyboard(phraseToFilename[e.Result.Text], ref tb, filenameToType);
+                    ShowKeyboard(phraseToFilename[e.Result.Text]);
+                }
+                
+               /* if (e.Result.Text == "What would you like to eat" || e.Result.Text == "What is your favorite Food")
                 {
                     curKeyboard.HideKeys();
                     curKeyboard.LoadKeyboard("Food.txt", ref tb, filenameToType);
@@ -648,12 +702,20 @@ namespace Test
                     curKeyboard.LoadKeyboard("Number.txt", ref tb, filenameToType);
                     ShowKeyboard("Number.txt");
                 }
-                else if (e.Result.Text == "Solve")
+            
+                else if (e.Result.Text == "Feeling")
                 {
-                    Window2 calculator = new Window2();
-                    calculator.Show();
+                    curKeyboard.HideKeys();
+                    curKeyboard.LoadKeyboard("Feelings.txt", ref tb, filenameToType);
+                    ShowKeyboard("Feelings.txt");
                 }
-
+                else if (e.Result.Text == "Where")
+                {
+                    curKeyboard.HideKeys();
+                    curKeyboard.LoadKeyboard("Places.txt", ref tb, filenameToType);
+                    ShowKeyboard("Places.txt");
+                }
+             */
 
             }
 

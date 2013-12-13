@@ -1,0 +1,13 @@
+Maize
+Blue
+Green
+Yellow
+Purple
+Pink
+Red
+Black
+Grey
+White
+Brown
+Orange
+Violet
