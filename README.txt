@@ -1,19 +1,12 @@
 The source code for our project can be found at https://github.com/ShaurinD/STATS.
-The application has two executables that need to be run, one for pupil tracking and one for the keyboard.
+The application has two executables that need to be run, one for the joystick input and one for the keyboard.
 
-Gaze Detection:
-For this project you will need to download the Intel Perceptual Computing SDK [1] and OpenCV Version 2.4.6 [2].
-Install the Intel SDK in 'C:/Program Files (x86)/Intel/' and extract OpenCV in 'C:/opencv/' (Don't create new
-folders for each of them)
-Now download the GazeDectect project from the git repo and place it in the Visual Studios projects folder
-in your documents folder.  Open the solution file with Visual Studio and build the solution.  
-All the linkers should be correct if you followed the instructions above and it will build successfully.
-Finally just run the program, you won't be able to test out the code unless you have the Intel Creative 
-Gesture Camera connected to your computer by USB.
-
-[1] http://software.intel.com/en-us/vcsource/tools/perceptual-computing-sdk
-[2] http://opencv.org/downloads.html
-
+Joystick:
+Download the "Testing JoystickApp" project and open the solution in Visual Studio.  You will also need to download 
+SharpDX 2.5.0 from "http://sharpdx.org/" and install that normally.  Without changing the installation location,
+SharpDX should be linked correctly to the Joystick program and allow you to build the project.  Once built, you can
+either just run it from Visual Studio or navigate through its folder to the bin/debug/ location where you can just
+run the executable there.
 
 Keyboard:
 Download the Dynamic Keyboard and open in Visual Studio. Open the ACTB project solution. Build the ACTB solution. 
